@@ -1,0 +1,17 @@
+#include<iostream>
+using namespace std;
+
+
+int main(){
+
+       /*  Read input as specified in the question.
+	* Print output as specified in the question.
+	*/
+  char name;
+  int marks1,marks2,marks3,avg;
+  cin>>name>>marks1>>marks2>>marks3;
+  avg=(marks1+marks2+marks3)/3;
+  cout<<name<<endl<<avg;
+}
+
+

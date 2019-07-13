@@ -1,0 +1,39 @@
+#include<iostream>
+using namespace std;
+
+// int main() {
+	
+//     int num,rem,ans=0,pv;
+//     cin>>num;
+//     pv=1;
+//     while(num>0)
+//     {
+//         rem=num%2;
+//         ans+=rem*pv;
+//         num/=2;
+//         pv = pv*10;
+//       //  c++;
+//     }
+//     cout<<ans;
+    
+	
+// }
+#include<iostream>
+using namespace std;
+
+int main() {
+    long pow = 1, binary = 0, decimal = 0, last;
+    cin>>decimal;
+    long d = decimal;
+  
+    while(decimal>0){
+        last = decimal%2;
+        decimal = decimal/2;
+        binary = binary + last*pow;
+        pow = pow*10;
+    }
+    
+         cout<<binary<<endl;
+
+    }
+   

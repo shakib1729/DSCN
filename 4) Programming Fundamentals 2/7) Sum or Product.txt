@@ -1,0 +1,19 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+  int n,c;
+  cin>>n>>c;
+    if(c==1){
+        int sum=n*(n+1)/2;
+        cout<<sum;
+    }
+    else if(c==2){
+        int prod=1;
+        while(n>=1)
+            prod*=n--;
+        cout<<prod;
+    }
+    else
+        cout<<-1;
+}

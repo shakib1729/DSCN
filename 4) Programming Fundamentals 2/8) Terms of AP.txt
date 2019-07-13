@@ -1,0 +1,14 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+  int x,count=0;
+  cin>>x;
+  for(int i=5;i<=3002;i+=3){
+    if(i%4!=0){
+        if(count==x) break;
+        cout<<i<<" ";
+        count++;
+    }
+  }
+}

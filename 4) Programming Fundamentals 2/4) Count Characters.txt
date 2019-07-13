@@ -1,0 +1,16 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+    int lowerAlpha=0,digits=0,whiteSpace=0;
+    char ch;
+    cin.get(ch);
+    while(ch!='$'){
+        if(ch>='a' && ch<='z') lowerAlpha++;
+        else if(ch>='0' && ch<='9') digits++;
+        else if(ch=='\n' || ch=='\t' || ch==' ') whiteSpace++;
+        cin.get(ch);
+
+    }
+    cout<<lowerAlpha<<" "<<digits<<" "<<whiteSpace;
+}

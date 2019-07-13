@@ -1,0 +1,34 @@
+#include<iostream>
+using namespace std;
+
+int main() {
+    int n, curr, prev;
+    bool flag = false, isIncreasing = false;
+    cin>>n;
+    cin>>prev;
+    for(int i=1; i<n; i++){
+        cin>>curr;
+        // checking if the current element is 
+        // greater than the previous element
+        if(curr > prev)
+            isIncreasing = true;
+        // now when isIncreasing has become 'true',
+        // then all the elements after it should be increasing
+        else if(curr <= prev && isIncreasing == true){
+             // this is a case of failure
+             // it says that the current element is less than 
+             // the prev and also previously we have encountered
+             // a case where the current element was greater
+             //  than prev
+             flag = true;
+        }
+        prev = curr;
+           
+    }
+    if(flag == false)
+        cout<<"true";
+    else
+        cout<<"false";
+    
+    
+}

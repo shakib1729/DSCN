@@ -1,0 +1,27 @@
+#include<iostream>
+using namespace std;
+
+
+int main(){
+    char name;
+    int m1,m2,m3,avg,first,second;
+    cin>>name>>m1>>m2>>m3;
+    if(m2>m1){
+        first=m2;
+         if(m1>m3)
+            second=m1;
+         else
+            second=m3;
+    }
+    else{
+        first=m1;
+         if(m2>m3)
+            second=m2;
+         else
+            second=m3;
+    }
+    avg=(first+second)/2;
+    cout<<name<<" "<<avg;
+}
+
+

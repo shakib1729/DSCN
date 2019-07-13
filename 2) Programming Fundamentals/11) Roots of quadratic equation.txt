@@ -1,0 +1,33 @@
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+
+int main(){
+    long double a,b,c,nature,x1,x2,d;
+     cin>>a>>b>>c;
+      d=b*b-4*a*c;
+      if(d==0){
+            nature=0;
+            x1=-b/(2*a);
+            x2=x1;
+      }
+      else if(d<0)
+                nature=-1;
+      else{
+                nature=1;
+                x1=(-b+sqrt(d))/(2*a);
+                x2=(-b-sqrt(d))/(2*a);
+             }
+
+      if(nature==-1)
+            cout<<nature;
+      else{
+        int r1=round(x1);
+        int r2=round(x2);
+        cout<<nature<<endl<<r1<<" "<<r2;
+      }
+
+}
+
+
