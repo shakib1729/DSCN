@@ -1,0 +1,57 @@
+#include <iostream>
+using namespace std;
+
+long maxPathSum(int arr1[], int arr2[], int m, int n)
+{
+ long i=0,j=0,sum1=0,sum2=0,sum=0;
+  
+  while(i<m and j<n){
+    
+    if(arr1[i]==arr2[j]){
+ //     cout<<arr1[i]<<endl;
+      sum1+=arr1[i];
+      sum2+=arr2[j];
+      if(sum1>sum2)
+        sum+=sum1;
+      else
+        sum+=sum2;
+      sum1=sum2=0;
+      i++,j++;
+    }
+    else if(arr1[i]<arr2[j])
+      sum1+=arr1[i++];
+    else
+      sum2+=arr2[j++];
+  }
+  
+  while(i<m)
+    sum1+=arr1[i++];
+  while(j<n)
+    sum2+=arr2[j++];
+  
+  if(sum1>sum2)
+    sum+=sum1;
+  else
+    sum+=sum2;
+  
+  return sum;  
+    
+}
+
+
+int main() {
+    int *a,*b,m,n,i;
+    cin>>m;
+    a=new int[m];
+    for(i=0;i<m;i++)
+        cin>>a[i];
+    cin>>n;
+    b=new int[n];
+    for(i=0;i<n;i++)
+        cin>>b[i];
+    long ans = maxPathSum(a,b,m, n);
+    cout << ans << endl;
+    delete a;
+    delete b;
+    return 0;
+}

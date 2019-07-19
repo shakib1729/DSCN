@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+
+int MissingNumber(int arr[], int size){
+  int arr2[1000]={},small=arr[0],large=arr[0],startIndex=0,endIndex=0;
+    arr2[arr[0]]++;
+    for(int i=1;i<size;i++){
+        if(arr[i]<small){
+            startIndex=arr[i];
+            small=arr[i];
+        }
+
+        else if(arr[i]>large){
+            endIndex=arr[i];
+            large=arr[i];
+        }
+
+        arr2[arr[i]]++;
+    }
+   for(int i=startIndex;i<=endIndex;i++)
+        if(arr2[i]>1)
+            return i;
+    
+
+}
+
+int main() {
+	int size;
+	cin>>size;
+	int * input=new int[1+size];
+	
+	for(int i=0;i<size;i++)
+		cin>>input[i];
+	
+	cout<<MissingNumber(input,size);	
+	
+	return 0;
+}

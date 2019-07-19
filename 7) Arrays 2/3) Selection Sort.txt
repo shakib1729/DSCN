@@ -1,0 +1,35 @@
+#include <iostream>
+using namespace std;
+
+void SelectionSort(int arr[], int n) {
+	
+  for(int i=0;i<n-1;i++){
+    int smallIndex=i;
+    for(int j=i+1;j<n;j++){
+      if(arr[j]<arr[smallIndex])
+        smallIndex=j;
+    }
+    int temp=arr[smallIndex];
+    arr[smallIndex]=arr[i];
+    arr[i]=temp;
+  }
+	
+}
+
+
+int main() {
+	
+	int num;
+		cin>>num;
+	int *ar=new int[1+num];
+	
+	for(int i=0;i<num;i++)
+		cin>>ar[i];
+	
+	SelectionSort(ar,num);
+
+	for(int i=0;i<num;i++)
+		cout << ar[i]<<" ";
+	
+	return 0;
+}

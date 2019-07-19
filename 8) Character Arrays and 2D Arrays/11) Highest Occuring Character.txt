@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+char highestOccurringChar(char input[]) {
+    int arr[26]={};
+    for(int i=0;input[i]!='\0';i++)
+        arr[input[i]-'a']++;
+
+    char maxChar=input[0];
+    int maxCount=arr[input[0]-'a'];
+   for(int i=1;input[i]!='\0';i++)
+      if(arr[input[i]-'a']>maxCount){
+        maxCount=arr[input[i]-'a'];
+        maxChar=input[i];
+      }
+   return maxChar;
+}
+
+int main() {
+    char input[1000];
+    cin.getline(input, 1000);
+    cout << highestOccurringChar(input) << endl;
+}

@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+int main(){
+    int sumE=0,sumO=0,n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;i++){
+        cin>>arr[i];
+        if(i%2==0) sumE+=arr[i];
+        else sumO+=arr[i];
+    }
+    cout<<sumE-sumO;
+}

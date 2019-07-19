@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+void rotateStringByNChars(char input[], int n) {
+  int l=0;
+ for(int i=0;input[i]!='\0';i++) l++;
+  
+ for(int i=0;i<n;i++)
+ {
+     int temp=input[l-1];
+     for(int j=l-1;j>=1;j--)
+        input[j]=input[j-1];
+     input[0]=temp;
+ }
+    
+}
+
+
+int main() {
+    char input[1000];
+    cin.getline(input, 1000);
+    int n;
+    cin >> n;
+    rotateStringByNChars(input, n);
+    cout << input << endl;
+}

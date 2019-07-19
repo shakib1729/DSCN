@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+
+void stringCompression(char input[]) {
+   int j=0,count=1;
+ char prev=input[0];
+ for(int i=1;input[i]!='\0';i++)
+ {
+    if(input[i]==prev)
+        count++;
+
+    else
+    {
+
+        input[j++]=prev;
+        if(count>1)
+            input[j++]=count+'0';
+        prev=input[i];
+        count=1;
+    }
+ }
+ input[j++]=prev;
+ if(count>1)
+    input[j++]=count+'0';
+ input[j]='\0';
+
+}
+
+
+int main() {
+    char input[1000];
+    cin.getline(input, 1000);
+    stringCompression(input);
+    cout << input << endl;
+}

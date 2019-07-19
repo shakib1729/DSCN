@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+
+int findString(char S[], char T[]) {
+    int k=0;
+    for(int i=0;S[i]!='\0';i++)
+    {
+        if(S[i]==T[k])
+        {
+            k++;
+            if(T[k]=='\0')
+                 return i-k+1;
+        }
+        else
+            k=0;
+    }
+    return -1;
+}
+
+int main() {
+    char S[1000], T[1000];
+    cin.getline(S, 1000);
+    cin.getline(T, 1000);
+    cout << findString(S, T) << endl;
+}
