@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+
+int sum(int arr[], int n){
+  int s=0;
+  for(int i=0; i<n; i++)
+    s+=arr[i];
+  return s;
+}
+
+void printSubsetSumToK(int decided[], int decidedSize, int undecided[], int undecidedSize, int k) {
+  
+   if(undecidedSize == 0){
+     
+     if(sum(decided, decidedSize) == k){
+     for(int i=0; i<decidedSize; i++)
+       cout<<decided[i]<<" ";
+     cout<<endl;
+    }
+     
+     return;
+   }
+     
+   
+   printSubsetSumToK(decided, decidedSize, undecided+1, undecidedSize-1, k);
+   decided[decidedSize++] = undecided[0];
+   printSubsetSumToK(decided, decidedSize, undecided+1, undecidedSize-1, k);
+}
+
+void printSubsetSumToK(int input[], int size, int k) {
+  int decided[size];
+    printSubsetSumToK(decided, 0, input, size, k);
+}
+
+
+int main() {
+  int input[1000],length,k;
+  cin >> length;
+  for(int i=0; i < length; i++)
+    cin >> input[i];
+  cin>>k;
+  printSubsetSumToK(input, length,k);
+}

@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+#include <string.h>
+
+void printAllPossibleCodes(string decided, string undecided) {
+   if(undecided.size() == 0){
+      cout<<decided<<endl;
+      return;
+   }
+    
+   int number = undecided[0] - '0';
+   printAllPossibleCodes(decided + (char)(number + 'a' -1) , undecided.substr(1) );
+  
+   if(undecided.size() > 1){
+     number = number * 10 + (undecided[1] - '0');
+     if(number <= 26)
+        printAllPossibleCodes(decided +(char)( number + 'a' -1), undecided.substr(2));
+   }
+   
+}
+
+void printAllPossibleCodes(string input) {
+   printAllPossibleCodes("", input);
+}
+
+int main(){
+    string input;
+    cin >> input;
+
+    printAllPossibleCodes(input);
+    return 0;
+}

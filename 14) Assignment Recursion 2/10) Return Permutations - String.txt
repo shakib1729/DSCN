@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int returnPermutations(string input, string output[]){
+   if(input.size() == 0){
+     output[0]="";
+     return 1;
+   }
+   int count = returnPermutations(input.substr(1), output);
+   for(int i = 1; i <= input.size()-1; i++){
+     for(int j=0; j<count; j++)
+       output[count*i +j] = output[j];
+   }
+  for(int i=0; i < input.size(); i++){
+    for(int j=0; j<count; j++){
+      string ch = "";
+      ch.push_back(input[0]);
+     output[count*i + j].insert(i, ch);
+    }
+  }
+  return count * input.size();
+}
+
+
+int main(){
+    string input;
+    cin >> input;
+    string output[10000];
+    int count = returnPermutations(input, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}

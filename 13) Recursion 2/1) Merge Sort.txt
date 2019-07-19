@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+
+void mergeSortedArray(int A[],int m,int B[],int n,int C[]){
+  int i=0,j=0,k=0;
+  while(i<m and j<n){
+    if(A[i]<B[j])
+      C[k++]=A[i++];
+    else
+      C[k++]=B[j++];
+  }
+  while(i<m)
+    C[k++]=A[i++];
+  while(j<n)
+    C[k++]=B[j++];
+}
+
+
+void mergeSort(int input[], int size){
+	if(size<=1)
+      return;
+  int L_len=size/2,R_len=size-L_len;
+  int L[L_len],R[R_len],i=0;
+  for(;i<L_len;i++)
+      L[i]=input[i];
+ for(int j=0;j<R_len;j++)
+      R[j]=input[i++];
+  mergeSort(L,L_len);
+  mergeSort(R,R_len);
+  mergeSortedArray(L,L_len,R,R_len,input);
+      
+}
+
+
+int main() {
+  int input[1000],length;
+  cin >> length;
+  for(int i=0; i < length; i++)
+    cin >> input[i];
+  mergeSort(input, length);
+  for(int i = 0; i < length; i++) {
+    cout << input[i] << " ";
+  }
+}

@@ -1,0 +1,43 @@
+#include <iostream>
+using namespace std;
+#include <string.h>
+
+int getCodes(string decided, string undecided, string output[10000], int outputSize) {
+  int undecidedSize = undecided.size();
+  
+  if(undecidedSize == 0){
+    output[outputSize++] = decided;
+    return outputSize;
+  }
+  
+  int number = undecided[0] - '0';
+  char correspondingChar = number + 'a' - 1;
+  outputSize = getCodes(decided + correspondingChar, undecided.substr(1), output, outputSize);
+  
+  if(undecidedSize > 1){
+    number = number * 10 + undecided[1] - '0';
+    if(number <= 26){
+       correspondingChar = number + 'a' - 1;
+       outputSize = getCodes(decided + correspondingChar, undecided.substr(2), output, outputSize);
+    }
+  }
+  
+  return outputSize; 
+}
+
+int getCodes(string input, string output[10000]) {
+   return getCodes("",input,output,0);
+}
+
+
+
+int main(){
+    string input;
+    cin >> input;
+
+    string output[10000];
+    int count = getCodes(input, output);
+    for(int i = 0; i < count && i < 10000; i++)
+        cout << output[i] << endl;
+    return 0;
+}

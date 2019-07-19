@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+#include<cstring>
+
+int stringToNumber(char input[],int end){
+  if(end==-1)
+      return 0;
+   int smallAns=stringToNumber(input,end-1);
+  return smallAns*10+(input[end]-'0');
+}
+
+int stringToNumber(char input[]) {
+    
+  return stringToNumber(input,strlen(input)-1);
+  
+}
+
+
+int main() {
+    char input[50];
+    cin >> input;
+    cout << stringToNumber(input) << endl;
+}

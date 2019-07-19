@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+#include<cstring>
+
+void replacePi(char input[]) {
+  
+  int l=strlen(input);
+  
+  if(l==1)
+    return;
+ 
+   if(input[0]=='p' && input[1]=='i'){
+  	for(int j=l+1;j>1;j--)
+      input[j]=input[j-2];
+    input[0]=3+'0';
+    input[1]='.';
+    input[2]=1+'0';
+    input[3]=4+'0';
+    input[l+2]='\0';
+  }
+  
+  replacePi(input+1);
+}
+
+int main() {
+    char input[10000];
+    cin.getline(input, 10000);
+    replacePi(input);
+    cout << input << endl;
+}

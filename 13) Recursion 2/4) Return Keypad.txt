@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+string code(int n){
+   string code[] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+  return code[n];
+}
+
+int keypad(int num, string output[]){
+  
+  if(num == 0){
+     output[0]="";
+      return 1;
+  }
+  
+    int count = keypad(num/10,output);
+    int digit = num%10,codeSize = code(digit).size();
+   
+  // Copy the output array
+    for(int i=1; i <= codeSize - 1; i++)
+      for(int j = 0; j < count; j++)
+        output[count*i + j] = output[j];
+    
+ // Append the characters corrresponding to the digit at the end
+    for(int i=0; i < codeSize; i++)
+      for(int j = 0; j < count; j++)
+        output[count*i +j] += code(digit)[i];  
+    
+   return count*codeSize;
+}
+
+
+
+int main(){
+    int num;
+    cin >> num;
+
+    string output[10000];
+    int count = keypad(num, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}

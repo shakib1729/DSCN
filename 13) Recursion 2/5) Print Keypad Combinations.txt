@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+string code(int n){
+   string code[] = {"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+  return code[n];
+}
+
+void printKeypad(int number, string decided) {
+  
+  if(number == 0){
+    cout << decided <<endl;
+    return;
+  }
+  string s = code(number%10);
+
+  for(int i = 0; i < s.size(); i++)
+    printKeypad(number/10, s[i] + decided);
+  
+}
+
+void printKeypad(int number) {
+  printKeypad(number, "");
+}
+
+
+
+int main() {
+  int number;
+  cin >> number;
+  printKeypad(number);
+}

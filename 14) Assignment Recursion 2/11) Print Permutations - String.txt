@@ -1,0 +1,29 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+void printPermutations(string decided, string undecided){
+   if(undecided.size() == 0){
+     cout<<decided<<endl;
+     return;
+   }
+   
+   for(int i=0; i<=decided.size(); i++){
+     string temp = decided;
+     temp.insert(i,undecided.substr(0,1));
+     printPermutations(temp, undecided.substr(1));
+   }
+  
+}
+
+void printPermutations(string input){
+   printPermutations("", input);
+}
+
+
+int main(){
+    string input;
+    cin >> input;
+    printPermutations(input);
+    return 0;
+}
