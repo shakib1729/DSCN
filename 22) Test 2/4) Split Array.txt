@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+
+bool checkPossible(int arr[],int sum,int size){
+  if(sum == 0 && size==0)
+    return true;
+  if(sum != 0 && size == 0)
+    return false;
+  
+  return checkPossible(arr + 1, sum - arr[0], size - 1) || checkPossible(arr + 1, sum + arr[0], size - 1);
+  
+  
+  
+}
+
+
+bool splitArray(int *input, int size) {
+  
+   int sum=0,tempArr[size]={},sum3=0,sum5=0,tempSize=0;
+  
+   for(int i=0;i<size;i++){
+     sum+=input[i];
+     if(input[i]%5==0)
+       sum5+=input[i];
+     else if(input[i]%3==0)
+       sum3+=input[i];
+     else
+       tempArr[tempSize++]=input[i];
+   }
+    
+   if(sum%2!=0 || size<=1)
+     return false;
+  int diff= abs(sum3-sum5);
+  return checkPossible(tempArr,diff,tempSize);
+   
+    
+}
+
+
+
+
+int main() {
+
+	int size;
+	cin>>size;
+	int *input=new int[1+size];	
+	
+	for(int i=0;i<size;i++)
+		cin>>input[i];
+	
+    if(splitArray(input, size)) {
+        cout << "true" << endl;
+    }
+    else {
+        cout << "false" << endl;
+    }
+
+	
+	return 0;
+
+}

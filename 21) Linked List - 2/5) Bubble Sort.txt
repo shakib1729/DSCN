@@ -1,0 +1,94 @@
+//bubble sort linked list iterative
+#include <iostream>
+using namespace std;
+
+
+class node{
+public:
+    int data;
+    node * next;
+    node(int data){
+        this->data=data;
+        this->next=NULL;
+    }
+};
+
+
+
+
+node* bubble_sort_LinkedList_itr(node* head)
+{
+    if(head==nullptr or head->next==nullptr)
+      return head;
+    
+    bool swapped=true;
+  
+    while(swapped){
+      
+      swapped=false;
+      node *curr=head,*prev=nullptr,*save=head->next;
+      
+      while(save!=nullptr){
+        
+        if(curr->data > save->data){
+           // swap the nodes
+          swapped = true;
+          if(prev == nullptr)
+            head=save;
+          else
+            prev->next = save;
+          
+          curr->next=save->next;
+          save->next=curr;
+          prev=save;
+        }
+        else{
+          prev=curr;
+        }
+        curr=prev->next;
+        save=curr->next;
+      }
+      
+    }
+  
+  return head;
+   
+}
+
+
+
+
+node* takeinput(){
+    int data;
+    cin>>data;
+    node* head=NULL,*tail=NULL;
+    while(data!=-1){
+        node *newnode=new node(data);
+        if(head==NULL)                  {
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+        cin>>data;
+    }
+    return head;
+}
+void print(node *head)
+{
+    node*temp=head;
+    while(temp!=NULL)
+    {
+        cout<<temp->data<<" ";
+        temp=temp->next;
+    }
+    cout<<endl;
+}
+int main()
+{
+    node* head=takeinput();
+    head=bubble_sort_LinkedList_itr(head);
+    print(head);
+}

@@ -1,0 +1,45 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int maximumProfit(int budget[], int n) {
+  
+   sort(budget,budget+n);
+   int currPrice=budget[n-1],maxProfit=budget[n-1],currProfit=budget[n-1];
+   
+  for(int i=n-2;i>=0;i--){
+    
+    if(budget[i]==currPrice)
+      currProfit+=currPrice;
+     
+    
+    else{
+       if(currProfit>maxProfit)
+        maxProfit=currProfit;
+      
+      currProfit=budget[i]*(n-i);
+      currPrice=budget[i];
+    }
+    
+  }
+  
+  if(currProfit>maxProfit)
+        maxProfit=currProfit;
+  
+  return maxProfit;
+
+}
+
+
+
+
+int main() {
+    int n ,*input,i,*cost;
+    cin>>n;
+    input = new int[n];
+    for(i = 0;i < n;i++)
+        cin>>input[i];
+    
+    cout << maximumProfit(input, n) << endl;
+    
+}

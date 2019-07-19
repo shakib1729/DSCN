@@ -1,0 +1,78 @@
+#include <iostream>
+using namespace std;
+
+
+int gcd(int a, int b)
+{
+    int minimum = min(a,b);
+    int ans = 1;
+    for(int i=2; i<=minimum; i++)
+    {
+        if((a%i)==0 && (b%i)==0)
+            ans = i;
+    }
+    return ans;
+}
+
+
+class Fraction {
+   int numerator,denominator;
+   
+   void simplify()
+    {
+        int temp = gcd(numerator, denominator);
+        numerator /= temp;
+        denominator /= temp;
+    }
+  
+  public:
+
+    Fraction(int num=0, int den=1)
+    {
+        if(den==0)
+            den = 1;
+        numerator = num;
+        denominator = den;
+        simplify();
+    }
+
+    void print(){
+     cout<<numerator<<'/'<<denominator<<endl;
+    }
+  
+  	void add(Fraction f){
+      numerator=numerator*f.denominator + f.numerator*denominator;
+      denominator*=f.denominator;
+      simplify();
+    }
+  
+  	void multiply(Fraction f){
+       numerator*=f.numerator;
+       denominator*=f.denominator;
+       simplify();
+    }
+    
+};
+
+
+int main() {
+	
+		int num1, deno1, num2, deno2, choice;
+		cin >> num1 >> deno1 >> num2 >> deno2;
+
+		Fraction f1(num1, deno1);
+		Fraction f2(num2, deno2);
+		cin >> choice; 
+		if(choice == 1) {
+			// Add
+			f1.add(f2);
+			f1.print();
+		}
+		else if(choice == 2) {
+			// Multiply
+			f1.multiply(f2);
+			f1.print();
+		}
+
+	}
+

@@ -1,0 +1,98 @@
+//Rearrange a given linked list in-place.Given a singly linked list L0 -> L1 -> ? -> Ln-1 -> Ln. Rearrange the nodes in the list so that the new formed list is : L0 -> Ln -> L1 -> Ln-1 -> L2 -> Ln-2 ?
+#include<iostream>
+using namespace std;
+
+template <typename T>
+class Node {
+	public:
+	T data;
+	Node* next;
+
+	Node(T data) {
+		next = NULL;
+		//(*this).data = data;
+		this->data = data;
+	}
+
+	~Node() {
+		if (next != NULL) {
+			delete next;
+		}
+	}
+};
+
+
+
+
+
+
+Node<int>* rearrange(Node<int> *head){
+    Node<int> *curr=head,*save;
+    
+    while(curr!=nullptr){
+      save=curr->next;
+      Node<int> *temp=curr,*prev;
+      
+      
+      while(temp->next!=nullptr){
+        prev=temp;
+        temp=temp->next;
+      }
+      prev->next=nullptr;
+      curr->next=temp;
+      
+      
+      if(curr->next!=nullptr)
+         curr=curr->next;
+      if(curr!=save)
+         curr->next=save;
+  
+      curr=curr->next;
+    }
+  return head;
+}
+	
+
+
+
+
+
+
+
+
+
+Node<int>* takeLLInput() {
+    int data;
+    cin>>data;
+    Node<int>* head=NULL,*tail=NULL;
+    while(data!=-1){
+        Node<int> *newnode=new Node<int>(data);
+        if(head==NULL)                  {
+            head=newnode;
+            tail=newnode;
+        }
+        else{
+            tail->next=newnode;
+            tail=newnode;
+        }
+        cin>>data;
+    }
+    return head;
+}
+
+void printLL(Node<int>*  head) {
+	while (head != NULL) {
+		cout << head->data << " ";
+		head = head->next;
+	}
+	cout << endl;
+}
+
+
+int main()
+{
+	Node<int>* head1=takeLLInput();
+	head1 = rearrange(head1);
+	printLL(head1);
+	return 0;
+}

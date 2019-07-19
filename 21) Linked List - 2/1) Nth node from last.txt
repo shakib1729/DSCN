@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node *next;
+    Node(int data){
+        this -> data = data;
+        this -> next = NULL;
+    }
+};
+
+
+Node* nthNodeFromLastIter(Node *head, int n) {
+  Node *fast = head, *slow = head;
+  while(n>=0){
+    if(fast == nullptr)
+      return nullptr;
+    fast = fast -> next;
+    n--;
+  }
+  while(fast != nullptr){
+    slow = slow -> next;
+    fast = fast -> next;
+  }
+  return slow;
+}
+
+
+
+
+Node* takeinput() {
+    int data;
+    cin >> data;
+    Node* head = NULL, *tail = NULL;
+    while(data != -1){
+        Node *newNode = new Node(data);
+        if(head == NULL)                  {
+            head = newNode;
+            tail = newNode;
+        }
+        else{
+            tail -> next = newNode;
+            tail = newNode;
+        }
+        cin >> data;
+    }
+    return head;
+}
+
+void print(Node *head) {
+    Node *temp = head;
+    while(temp != NULL) {
+        cout << temp -> data << " ";
+        temp = temp -> next;
+    }
+    cout<<endl;
+}
+
+int main() {
+    Node *head = takeinput();
+    int n;
+    cin >> n;
+    Node *ans = nthNodeFromLastIter(head, n);
+    if(ans != NULL) {
+        cout << ans -> data << endl;
+    }
+    return 0;
+}
+
