@@ -1,0 +1,119 @@
+#include<iostream>
+using namespace std;
+
+class Node {
+    public :
+    int data;
+    Node *next;
+    
+    Node(int data) {
+        this -> data = data;
+        next = NULL;
+    }
+};
+
+
+
+
+
+
+class Stack {
+    Node *head;
+    int size;		// number of elements prsent in stack
+    
+    public :
+    
+    Stack() :head(NULL),size(0){}
+    
+    int getSize() {
+        return size;
+    }
+    
+    bool isEmpty() {
+        return size==0;
+    }
+    
+    void push(int element) {
+        Node *ptr=new Node(element);
+        ptr->next=head;
+        head=ptr;
+        size++;
+    }
+    
+    int pop() {
+        // Return 0 if stack is empty. Don't display any other message
+      if(isEmpty())
+        return 0;
+      
+      int element=head->data;
+      Node *ptr=head;
+      head=head->next;
+      delete ptr;
+       size--;
+      return element;
+    }
+    
+    int top() {
+        // Return 0 if stack is empty. Don't display any other message
+      if(isEmpty())
+        return 0;
+      
+      return head->data;
+        
+    }
+    
+    
+    
+};
+
+
+
+
+
+
+
+int main() {
+    
+    Stack st;
+    
+    int choice;
+    cin >> choice;
+    int input;
+    
+    while (choice !=-1) {
+        if(choice == 1) {
+            cin >> input;
+            st.push(input);
+        }
+        else if(choice == 2) {
+            int ans = st.pop();
+            if(ans != 0) {
+                cout << ans << endl;
+            }
+            else {
+                cout << "-1" << endl;
+            }
+        }
+        else if(choice == 3) {
+            int ans = st.top();
+            if(ans != 0) {
+                cout << ans << endl;
+            }
+            else {
+                cout << "-1" << endl;
+            }
+        }
+        else if(choice == 4) {
+            cout << st.getSize() << endl;
+        }
+        else if(choice == 5) {
+            if(st.isEmpty()){
+                cout << "true" << endl;
+            }else{
+                cout << "false" << endl;
+            }
+        }
+        cin >> choice;
+    }
+    
+}

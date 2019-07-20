@@ -1,0 +1,55 @@
+#include <iostream>
+#include<stack>
+using namespace std;
+
+
+
+
+char correspondingOpeningBracket(char ch){
+  
+  switch(ch){
+    case ')': return '(';
+    case '}': return '{';
+    case ']': return '[';
+  }
+  
+}
+
+bool checkBalanced(char *exp) {
+	stack<char> st;
+    
+    for(int i=0;exp[i]!='\0';i++){
+      
+      if(exp[i]=='(' || exp[i]=='{' || exp[i]=='[')
+        st.push(exp[i]);
+      
+      else if(exp[i]==')' || exp[i]=='}' || exp[i]==']'){
+        
+        if(st.empty())
+        	return false;
+        
+        if(correspondingOpeningBracket(exp[i]) == st.top())
+          st.pop();
+        else
+          return false;
+        
+      }  
+    }
+  return st.empty();
+}
+
+
+
+
+
+int main() {
+    char input[100000];
+    cin.getline(input, 100000);
+//    cin >> input;
+    if(checkBalanced(input)) {
+        cout << "true" << endl;
+    }
+    else {
+        cout << "false" << endl;
+    }
+}
