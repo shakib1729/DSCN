@@ -1,0 +1,125 @@
+#include <iostream>
+#include <queue>
+#include <stack>
+using namespace std;
+
+template <typename T>
+class BinaryTreeNode {
+    public : 
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data) {
+        this -> data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+
+
+
+
+
+
+
+
+#include<queue>
+#include<stack>
+
+void zigZagOrder(BinaryTreeNode<int> *root) {
+  if(root == nullptr)
+    return;
+  int count=1;
+  queue<BinaryTreeNode<int> *> q;
+  q.push(root);
+  
+  while(!q.empty()){
+    
+    int l = q.size();
+    
+    if(count%2==0){  
+      stack<BinaryTreeNode<int> *> s;
+       for(int i=0;i<l;i++){
+         BinaryTreeNode<int> *curr=q.front();
+         q.pop();
+         s.push(curr);
+         if(curr->left!=nullptr)
+           q.push(curr->left);
+         if(curr->right!=nullptr)
+           q.push(curr->right);
+      }
+      while(!s.empty()){
+        BinaryTreeNode<int> *curr=s.top();
+        s.pop();
+        cout<<curr->data<<" ";
+      }
+    }
+    
+    else{ 
+      for(int i=0;i<l;i++){
+        BinaryTreeNode<int> *curr=q.front();
+         q.pop();
+        cout<<curr->data<<" ";
+        if(curr->left!=nullptr)
+           q.push(curr->left);
+        if(curr->right!=nullptr)
+           q.push(curr->right);
+      }
+    }
+    
+   cout<<endl;
+   count++;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+BinaryTreeNode<int>* takeInput() {
+    int rootData;
+    //cout << "Enter root data : ";
+    cin >> rootData;
+    if(rootData == -1) {
+        return NULL;
+    }
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(rootData);
+    queue<BinaryTreeNode<int>*> q;
+    q.push(root);
+    while(!q.empty()) {
+        BinaryTreeNode<int> *currentNode = q.front();
+	q.pop();
+        int leftChild, rightChild;
+        //cout << "Enter left child of " << currentNode -> data << " : ";
+        cin >> leftChild;
+        if(leftChild != -1) {
+            BinaryTreeNode<int>* leftNode = new BinaryTreeNode<int>(leftChild);
+            currentNode -> left =leftNode;
+            q.push(leftNode);
+        }
+        //cout << "Enter right child of " << currentNode -> data << " : ";
+        cin >> rightChild;
+        if(rightChild != -1) {
+            BinaryTreeNode<int>* rightNode = new BinaryTreeNode<int>(rightChild);
+            currentNode -> right =rightNode;
+            q.push(rightNode);
+        }
+    }
+    return root;
+}
+
+int main() {
+    BinaryTreeNode<int>* root = takeInput();
+    zigZagOrder(root);
+}
