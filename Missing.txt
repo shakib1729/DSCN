@@ -1,0 +1,32 @@
+1) Assignment : Recursion 2 
+	i) Check AB
+	ii) Return Subsets Sum to K
+
+2) Array-1 Oprimized
+	i) Pair Sum in Array
+	ii) Triplet Sum in Array
+
+3) Linked List-1
+	i) Delete Node
+	ii) Palindrome Linked List
+
+4) Linked List-2
+	i) Delete every N nodes
+
+5) Lecture Trees
+	i) Second Largest element in Tree
+	
+6) Binary Trees
+	i) Level Order Traversal
+	ii) Levelwise Linked list
+
+7) BST
+	i) BST to LL
+	ii) Path Sum Root to Leaf
+
+8) Priority Queues
+	i) Merge K-Sorted Arrays
+
+9) DP
+	i) All Possible Ways
+	ii) Shortest Subsequence
