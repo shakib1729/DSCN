@@ -1,0 +1,62 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+#define NMAX 55
+char cake[NMAX][NMAX];
+
+
+
+
+
+int largestPiece(int n,char cake[NMAX][NMAX], int r, int c, bool visited[NMAX][NMAX]){
+    if(r<0 or c<0 or r>=n or c>=n)
+        return 0;
+    
+    if(visited[r][c])
+        return 0;
+    
+    if(cake[r][c] == '0')
+        return 0;
+    
+    visited[r][c] = true;
+    
+    int op1 = largestPiece(n, cake, r+1, c, visited);
+    int op2 = largestPiece(n, cake, r, c+1, visited);
+    int op3 = largestPiece(n, cake, r-1, c, visited);
+    int op4 = largestPiece(n, cake, r, c-1, visited);
+    
+    return op1+op2+op3+op4+1;
+}
+
+int solve(int n,char cake[NMAX][NMAX])
+{
+	int maxi = 0;
+    bool visited[NMAX][NMAX]={};
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            int currMax = largestPiece(n, cake, i, j, visited);
+            if(currMax > maxi)
+                maxi = currMax;
+        }
+    }
+    
+    return maxi;
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	int n;
+	cin>>n;
+	for(int i=0;i<n;i++)
+	{
+		scanf("%s",cake[i]);
+	}
+	cout<<solve(n,cake)<<endl;
+}

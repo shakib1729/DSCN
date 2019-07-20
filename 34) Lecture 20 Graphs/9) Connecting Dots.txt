@@ -1,0 +1,95 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MAXN 51
+
+
+
+
+
+
+
+
+bool solve(char board[][MAXN],int n, int m, int startRow, int startCol, int r, int c, bool visited[][MAXN], int count){
+    if(r == startRow and c == startCol and count>=3)
+        return true;
+    
+    if(r<0 or c<0 or r>=n or c>=m or visited[r][c])
+        return false;
+    
+    if(board[r][c] != board[startRow][startCol])
+        return false;
+    
+    if(visited[r][c])
+        return false;
+    
+    
+    visited[r][c] = true;
+    
+    if(solve(board, n, m, startRow, startCol, r+1, c, visited, count+1))
+        return true;
+    
+    if(solve(board, n, m, startRow, startCol, r-1, c, visited, count+1))
+        return true;
+    
+    if(solve(board, n, m, startRow, startCol, r, c+1, visited, count+1))
+        return true;
+    
+    if(solve(board, n, m, startRow, startCol, r, c-1, visited, count+1))
+        return true;
+    
+    visited[r][c] = false;
+    
+    return false;
+    
+}
+
+int solve(char board[][MAXN],int n, int m)
+{
+	bool visited[MAXN][MAXN]={};
+    
+    // Selecting a starting point for the cycle
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++){
+                visited[i][j] = true;
+                if(solve(board, n, m, i, j, i+1, j, visited, 0))
+                     return 1;
+                
+                if(solve(board, n, m, i, j, i, j+1, visited, 0))
+                     return 1;
+                
+                if(solve(board, n, m, i, j, i-1, j, visited, 0))
+                     return 1;
+                
+                if(solve(board, n, m, i, j, i, j-1, visited, 0))
+                     return 1;
+        }
+    }
+    
+    return 0;
+}
+
+
+// 3 3
+// AAB
+// ABB
+// BBB
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+	int N,M,i;
+	char board[MAXN][MAXN];
+	cin>>N>>M;
+	for(i = 0;i < N; i++){
+		cin>>board[i];
+	}
+	cout<<solve(board,N,M)<<endl;
+}

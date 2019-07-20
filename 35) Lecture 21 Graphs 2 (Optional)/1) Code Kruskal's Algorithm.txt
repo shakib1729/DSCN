@@ -1,0 +1,71 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class Edge{
+    public:
+        int source, destination, weight;
+};
+
+bool customCompare(const Edge &e1, const Edge &e2){
+    return e1.weight < e2.weight;
+}
+
+int topParent(int *parent, int v){
+  int p = parent[v];
+  while(p != parent[p])
+    p = parent[p];
+  return p;
+}
+
+void Kruskal(Edge *input, int E, int V){
+  Edge *output = new Edge[V-1];
+
+  sort(input, input+E, customCompare);
+
+  int *parent = new int[V];
+  for(int i=0; i<V; i++)
+      parent[i] = i;
+
+  int count = 0;
+
+  for(int i=0; i<E; i++){
+      if(count == V-1)
+          break;
+      int v1 = input[i].source, v2 = input[i].destination;
+      int p1 = topParent(parent, v1), p2 = topParent(parent, v2);
+
+      if(p1 != p2){
+          output[count++] = input[i];
+          parent[p2] = p1;
+      }
+  }
+  for(int i=0; i<V-1; i++){
+      int v1 = output[i].source, v2 = output[i].destination, w = output[i].weight;
+      if(v1 < v2)
+          cout<<v1<<" "<<v2<<" ";
+      else
+          cout<<v2<<" "<<v1<<" ";
+      cout<<w<<endl;
+  }
+
+  delete[] output;
+  delete[] parent;
+}
+
+
+int main()
+{
+  int V, E;
+  cin >> V >> E;
+
+  Edge *input = new Edge[E];
+
+  for(int i=0; i<E; i++)
+      cin>>input[i].source>>input[i].destination>>input[i].weight;
+
+  Kruskal(input, E, V);
+
+  delete[] input;
+  return 0;
+}

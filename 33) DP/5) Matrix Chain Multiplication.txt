@@ -1,0 +1,75 @@
+#include<iostream>
+using namespace std;
+
+
+
+
+#include<climits>
+// // using memoization (top down)
+// int dp[101][101];
+
+// int mcm(int* p, int start, int end){
+//     if(dp[start][end] != -1)
+//         return dp[start][end];
+    
+//     if(end - start <= 1){ // if only single matrix , no multiplication
+//         dp[start][end] = 0;
+//          return 0;
+//     }  
+      
+//    int min = INT_MAX;
+//    for(int i = start+1; i < end; i++){
+//        int ans = mcm(p, start, i) + mcm(p, i, end) + p[start] * p[i] * p[end];
+//        if(ans < min)
+//            min = ans;
+//    }
+//    dp[start][end] = min;
+//    return dp[start][end];
+// }
+
+
+// int mcm(int* p, int n){
+//    for(int i=0; i<101; i++)
+//        for(int j=0; j<101; j++)
+//            dp[i][j] = -1;
+    
+//    return mcm(p, 0, n);
+// }
+
+// using DP (bottom up)
+int mcm(int* p, int n){
+   int dp[n+1][n+1]={};
+    
+    for(int start=n-2; start>=0; start--)
+        for(int end=start+2; end<=n; end++){
+            int min = INT_MAX, ans;
+             for(int k = start + 1; k < end; k++){
+                 ans = dp[start][k] + dp[k][end] + p[start] * p[k] * p[end];
+                 if(ans < min)
+                     min = ans;
+             }
+            dp[start][end] = min;
+        }
+    
+    return dp[0][n];
+}
+
+
+
+
+
+int main(){
+
+  int n; 
+  cin >> n;
+  int* p = new int[n];
+
+  for(int i = 0; i <= n; i++){
+    cin >> p[i];
+  }
+
+  cout << mcm(p, n);
+
+}
+
+

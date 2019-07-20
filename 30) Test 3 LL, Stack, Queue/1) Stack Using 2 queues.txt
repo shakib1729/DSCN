@@ -1,0 +1,143 @@
+#include <iostream>
+using namespace std;
+
+
+
+
+
+
+
+
+#include<queue>
+template<typename T>
+class stack {
+ public:
+  queue<T> *q1 = new queue<T>;
+  queue<T> *q2 = new queue<T>;
+    stack(){}
+    void push(T value){
+      if(q1->empty()){
+        q2->push(value);
+      }
+      else
+        q1->push(value);
+      if(q1->empty()){
+        queue<T> *q3 = q2;
+        q2 = q1;
+        q1 = q3;
+      }
+    }
+    T pop(){
+      if(q1->size() == 0 && q2->size() == 0)
+        return 0;
+      T finalTop;
+       if(q1->empty()){
+        while(!q2->empty()){
+          T top = q2->front();
+        q2->pop();
+        if(q1->empty()){
+          finalTop = top;
+          break;
+        }
+        q1->push(top);
+        } 
+      }
+      if(q2->empty()){
+        while(!q1->empty()){
+          T top = q1->front();
+        q1->pop();
+        if(q1->empty()){
+          finalTop = top;
+          break;
+        }
+          
+        q2->push(top);
+        } 
+      }
+      if(q1->empty()){
+        queue<T> *q3 = q2;
+        q2 = q1;
+        q1 = q3;
+      }
+      return finalTop;
+    }
+    T top(){
+      if(q1->size() == 0 && q2->size() == 0)
+        return 0;
+      T finalTop;
+       if(q1->empty()){
+        while(!q2->empty()){
+          T top = q2->front();
+        q2->pop();
+        q1->push(top);
+        if(q1->empty()){
+          finalTop = top;
+          
+        }
+        } 
+      }
+      if(q2->empty()){
+        while(!q1->empty()){
+          T top = q1->front();
+        q1->pop();
+        q2->push(top);
+        if(q1->empty()){
+          finalTop = top;
+         
+        }
+       } 
+      }
+      if(q1->empty()){
+        queue<T> *q3 = q2;
+        q2 = q1;
+        q1 = q3;
+      }
+      return finalTop;
+    }
+    int getSize(){
+      return q1->size() + q2->size();
+    }
+};
+
+
+
+
+
+
+
+
+
+int main(){
+    stack<int> s;
+    int choice, input;
+    
+    while(true){
+        
+        cin>>choice;
+        
+        switch(choice){
+            case 1:
+                cin >> input;
+                s.push(input);
+                break;
+            case 2:
+                cout << s.pop() << "\n";
+                break;
+            case 3:
+                cout << s.top() << "\n";
+                break;
+            case 4 :
+                cout << s.getSize() << endl;
+                break;
+            case 5 : // Test
+                while(!s.q1 -> empty()) {
+                    cout << s.q1 -> front() << " ";
+                    s.q1 -> pop();
+                }
+                return 0;
+            default:
+                return 0;
+                break;
+        }
+    }
+}

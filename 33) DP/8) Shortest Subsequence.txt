@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+	string S,V;
+	cin>>S>>V;
+	cout<<solve(S,V)<<endl;
+	return 0;
+}

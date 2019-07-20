@@ -1,0 +1,35 @@
+#include<iostream>
+#include<cstring>
+#include<map>
+using namespace std;
+
+int lcs(string s1, string s2){
+    int dp[100][100]={};
+    int m = s1.length(), n = s2.length();
+    for(int i=1; i<=m; i++)
+       for(int j=1; j<=n; j++){
+         if(s1[i-1] == s2[j-1])
+            dp[i][j] = dp[i-1][j-1] + 1;
+         else{
+            int op1 = dp[i-1][j],
+                op2 = dp[i][j-1],
+                op3 = dp[i-1][j-1];
+            dp[i][j] = max(max(op1, op2), op3);
+        }
+     }
+    return dp[m][n];
+}
+
+int main(){
+
+  string s1;
+  string s2;
+
+  cin >> s1;
+  cin >> s2;
+
+  cout << lcs(s1,s2) << endl;
+
+}
+
+

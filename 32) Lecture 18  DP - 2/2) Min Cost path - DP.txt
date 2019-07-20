@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+
+#include <vector>
+#include <climits>
+
+int minCostPath(int **input, int m, int n) {
+    int dp[m][n] = {};
+    // starting from backwards and calculating optimum path to reach the last cell from each cell
+    dp[m-1][n-1] = input[m-1][n-1];
+    dp[m-1][n-2] = input[m-1][n-2] + dp[m-1][n-1];
+    dp[m-2][n-1] = input[m-2][n-1] + dp[m-1][n-1];
+    dp[m-2][n-2] = input[m-2][n-2] + dp[m-1][n-1];
+    
+    for(int i=m-1; i>=0; i--){
+          for(int j=n-1; j>=0; j--){
+              if(dp[i][j] == 0){
+                  int op1 = INT_MAX, op2 = INT_MAX, op3 = INT_MAX;
+                  if(i+1 < m)
+                      op1 = dp[i+1][j];
+                  if(j+1 < n)
+                      op2 = dp[i][j+1];
+                  if(i+1 < m and j+1 < n)
+                      op3 = dp[i+1][j+1];
+                  
+                  dp[i][j] = input[i][j] + min(min(op1, op2), op3);
+              }
+          }
+    } 
+    return dp[0][0];
+}
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+    int **arr,n,m,i,j;
+    cin >> n >> m;
+    arr = new int*[n];
+    for(i = 0; i < n; i++) {
+        arr[i] = new int[m];
+    }
+    for(i = 0; i < n; i++) {
+        for(j = 0; j < m; j++) {
+            cin >> arr[i][j];
+	    }
+    }
+    
+    cout << minCostPath(arr, n, m) << endl;
+    
+    return 0;
+}

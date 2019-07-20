@@ -1,0 +1,25 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+#define NUM 1000000007
+int binaryTreesOfHeightH(int h) {
+   long arr[h+1];
+   arr[1] = 1;
+   arr[2] = 3;
+   for(int i=3; i<=h; i++)
+     arr[i] = ((arr[i-1]*arr[i-1])%NUM + (2*arr[i-1]*arr[i-2])%NUM)%NUM;
+   
+   return arr[h];
+}
+
+
+
+
+int main() {
+    int h;
+    cin >> h;
+    int ans = binaryTreesOfHeightH(h);
+    ans = ans % ((int)(pow(10, 9)) + 7);
+    cout << ans << endl;
+}

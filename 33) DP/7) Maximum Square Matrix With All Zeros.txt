@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+
+
+
+int findMaxSquareWithAllZeros(int** arr, int row, int col){
+    int dp[row][col]={}; // to store the length of largest square ending at i,j with all 0s
+    
+    for(int i=0; i<row; i++)
+        if(arr[i][0] == 0)
+            dp[i][0] = 1;
+    
+    for(int j=0; j<col; j++)
+        if(arr[0][j] == 0)
+            dp[0][j] = 1;
+    
+    int max = 0;
+    for(int i=0; i<row; i++)
+        for(int j=0; j<col; j++){
+            
+            if(i>0 and j>0 and arr[i][j] == 0){
+                int top = dp[i-1][j],
+                    left = dp[i][j-1],
+                    topLeft = dp[i-1][j-1];
+                dp[i][j] = min(min(top, left), topLeft) + 1;
+            }
+            
+           if(dp[i][j] > max)
+               max = dp[i][j];
+        }
+    
+    return max;
+}
+
+
+
+
+
+
+
+
+
+int main()
+ {
+  int **arr,n,m,i,j;
+  cin>>n>>m;
+  arr=new int*[n];
+  for(i=0;i<n;i++)
+      {
+       arr[i]=new int[m];
+      }
+  for(i=0;i<n;i++)
+     {
+      for(j=0;j<m;j++)
+	    {
+	     cin>>arr[i][j];
+	    }
+     }
+  cout << findMaxSquareWithAllZeros(arr,n,m) << endl;
+  delete arr;
+  return 0;
+}

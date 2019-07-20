@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int editDistance(string s1, string s2){
+  int ls1 = s1.length(), ls2 = s2.length();
+  if(ls1 == 0 and ls2 == 0)
+      return 0;
+  if(ls1 == 0)
+      return ls2;
+  if(ls2 == 0)
+      return ls1;
+  if(s1[0] == s2[0])
+     return editDistance(s1.substr(1), s2.substr(1));
+  else{
+      int op1 = editDistance(s1, s2.substr(1)) + 1, // delete first character from s2
+          op2 = editDistance(s1.substr(1), s2) + 1, // insert a character at starting in s2
+          op3 = editDistance(s1.substr(1), s2.substr(1)) + 1; // replace first character in s2
+      return min(min(op1, op2), op3);
+  }
+}
+
+int main(){
+
+  string s1;
+  string s2;
+
+  cin >> s1;
+  cin >> s2;
+
+  cout << editDistance(s1,s2) << endl;
+
+}

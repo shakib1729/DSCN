@@ -1,0 +1,111 @@
+#include <iostream>
+using namespace std;
+
+class Node{
+public:
+    int data;
+    Node *next;
+    Node(int data){
+        this -> data = data;
+        this -> next = NULL;
+    }
+};
+
+
+
+
+
+
+
+
+Node *reverse(Node *head){
+  Node *curr=head, *save, *prev = nullptr;
+  while(curr != nullptr){
+    save = curr -> next;
+    curr -> next = prev;
+    prev = curr;
+    curr = save;
+  }
+  head = prev;
+  return head;
+}
+
+Node* NextLargeNumber(Node *head) {
+  if(head == nullptr)
+    return nullptr;
+  
+  head = reverse(head);
+ 
+  Node *curr = head,*prev = head;
+  curr->data += 1;
+  int carry = curr->data/10;
+  curr->data %= 10;
+  curr = curr->next;
+  while(curr != nullptr){
+    if(carry == 0)
+      break;
+    curr->data += carry;
+     carry = curr->data/10;
+    curr->data %= 10;
+    prev = prev -> next;
+    curr = curr->next;
+  }
+  if(carry > 0){
+    Node *ptr = new Node(carry);
+    prev -> next = ptr;
+    ptr -> next =nullptr;
+  }
+  head = reverse(head);
+  return head;
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Node* takeinput() {
+    int data;
+    cin >> data;
+    Node* head = NULL, *tail = NULL;
+    while(data != -1){
+        Node *newNode = new Node(data);
+        if(head == NULL)                  {
+            head = newNode;
+            tail = newNode;
+        }
+        else{
+            tail -> next = newNode;
+            tail = newNode;
+        }
+        cin >> data;
+    }
+    return head;
+}
+
+void print(Node *head) {
+    Node *temp = head;
+    while(temp != NULL) {
+        cout << temp -> data << " ";
+        temp = temp -> next;
+    }
+    cout<<endl;
+}
+
+int main() {
+    Node *head = takeinput();
+    
+    head = NextLargeNumber(head);
+    print(head);
+    return 0;
+}
+
+
+

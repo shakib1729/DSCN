@@ -1,0 +1,38 @@
+#include <iostream>
+using namespace std;
+#include <cmath>
+
+
+
+
+
+#define NUM 1000000007
+int balancedBTs(int h) {
+   if(h == 1)
+     return 1;
+   if(h == 2)
+     return 3;
+  // very efficient to first store the result
+   long h1 = balancedBTs(h-1);
+   long h2 = balancedBTs(h-2);
+   long f1 = (h1*h1)%NUM;
+   long f2 = (h1*h2)%NUM;
+   long f3 = (f2*2)%NUM;
+   long f4 = (f1 + f3)%NUM;
+   return f4;
+}
+
+
+
+
+
+
+
+
+
+int main() {
+    int h;
+    cin >> h;
+    int ans = balancedBTs(h);
+    cout << ans << endl;
+}

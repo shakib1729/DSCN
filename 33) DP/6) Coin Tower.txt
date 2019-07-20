@@ -1,0 +1,47 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+
+
+
+
+string solve(int n, int x, int y)
+{
+   int dp[n+1]={};  // stores 1 or 0. 1 if the current player wins and 0 if the next player wins
+   dp[1] = 1;
+   dp[x] = 1;
+   dp[y] = 1;
+   for(int i=2; i<=n; i++){
+       int op1 = i-1, op2 = i-x, op3 = i-y;
+       if(op1 == 0 or op2 == 0 or op3 == 0)
+           dp[i] = 1;
+       else{
+           int ans1 = 0, ans2 = 0, ans3 = 0;
+           ans1 = !dp[op1];
+           if(op2 > 0)
+               ans2 = !dp[op2];
+           if(op3 > 0)
+               ans3 = !dp[op3];
+           dp[i] = ans1 or ans2 or ans3;
+       }
+   }
+  if(dp[n] == 1)
+      return "Beerus";
+    return "Whis";
+}
+
+
+
+
+
+
+
+
+
+int n,x,y;
+int main()
+{
+	cin>>n>>x>>y;
+	cout<<solve(n,x,y)<<endl;
+}

@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include<unordered_map>
+using namespace std;
+
+void bft(int **adj, int V, int v1, vector<bool> &visited, int v2){
+    queue<int> q;
+  vector<int> v;
+  unordered_map<int, int> m;
+  q.push(v1);
+  visited[v1] = true;
+  int flag=0;
+  while(!q.empty()){
+    int curr = q.front();
+     v.push_back(curr);
+    q.pop();
+    if(curr == v2){
+       flag=1;
+       break;
+    }
+    for(int i=0; i<V; i++)
+      if(adj[curr][i] == 1 and visited[i] == false){
+        m[i] = curr;
+        q.push(i);
+        visited[i] = true;
+      }
+  }
+  if(flag == 1){
+    int curr = v2;
+    while(curr != v1){
+      cout<<curr<<" ";
+      curr = m[curr];
+    }
+    cout<<curr<<" ";
+  }
+  
+}
+
+void getPath(int **adj, int V, int v1, int v2){
+
+  vector<bool> visited(V, false);
+  bft(adj, V, v1, visited, v2);
+  
+}
+
+
+int main() {
+    int V, E;
+    cin >> V >> E;
+    
+   int **adj = new int*[V];
+   for(int i=0; i<V; i++){
+      adj[i] = new int[V];
+      for(int j=0; j<V; j++)
+        adj[i][j] = 0;
+   }
+    for(int i=0; i<E; i++){
+      int a,b;
+      cin>>a>>b;
+      adj[a][b] = adj[b][a] = 1;
+    }
+   int v1, v2;
+   cin>>v1>>v2;
+   getPath(adj, V, v1, v2);
+
+  return 0;
+}

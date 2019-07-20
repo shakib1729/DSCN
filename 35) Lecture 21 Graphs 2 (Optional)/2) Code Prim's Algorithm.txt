@@ -1,0 +1,78 @@
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int findMinVertex(int V, bool visited[], int weight[]){
+    int minWeightVertex, minWeight = INT_MAX;
+    for(int i=0; i<V; i++)
+        if(visited[i] == false and weight[i] < minWeight){
+            minWeight = weight[i];
+            minWeightVertex = i;
+        }
+    return minWeightVertex;
+}
+
+void Prim(int **adj, int V){
+
+  bool *visited = new bool[V];
+  int *weight = new int[V];
+  int *parent = new int[V];
+
+  for(int i=0; i<V; i++){
+    weight[i] = INT_MAX;
+    visited[i] = false;
+  }
+  weight[0] = 0;
+  parent[0] = -1;
+  for(int i=0; i<V-1; i++){
+    // pick vertex with minimum weight from all unvisited vertices
+      int minWeightVertex = findMinVertex(V, visited, weight);
+
+      // mark 'minWeightVertex' as visited
+       visited[minWeightVertex] = true;
+
+      // for all unvisited neighbours of 'minWeightVertex', check if adj[minWeightVertex][i] < weight[i] and update parent[i]
+      for(int j=0; j<V; j++)
+          if(adj[minWeightVertex][j] != 0 and visited[j] == false)
+              if(adj[minWeightVertex][j] < weight[j]){
+                  weight[j] = adj[minWeightVertex][j];
+                  parent[j] = minWeightVertex;
+      }
+  }
+  for(int i=1; i<V; i++){
+      if(i < parent[i])
+         cout<<i<<" "<<parent[i]<<" ";
+      else
+         cout<<parent[i]<<" "<<i<<" ";
+      cout<<weight[i]<<endl;
+  }
+
+  delete[] visited;
+  delete[] weight;
+  delete[] parent;
+}
+
+
+
+int main()
+{
+  int V, E, tempX, tempY, w;
+  cin >> V >> E;
+  int **adj = new int *[V];
+  for(int i=0; i<V; i++){
+      adj[i] = new int[V];
+      for(int j=0; j<V; j++)
+          adj[i][j] = 0;
+  }
+  for(int i=0; i<E; i++){
+      cin>>tempX>>tempY>>w;
+      adj[tempX][tempY] = w;
+      adj[tempY][tempX] = w;
+  }
+  Prim(adj, V);
+
+  for(int i=0; i<V; i++)
+    delete[] adj[i];
+  delete[] adj;
+  return 0;
+}

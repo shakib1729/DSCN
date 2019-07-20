@@ -1,0 +1,58 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+
+
+int solve(int V,int E,vector<int>u,vector<int>v)
+{
+	int **adj = new int*[V];
+    for(int i=0; i<V; i++){
+        adj[i] = new int[V];
+        for(int j=0; j<V; j++)
+            adj[i][j] = 0;
+    }
+    for(int i=0; i<E; i++){
+        int a, b;
+        a = u[i];
+        b = v[i];
+        adj[a-1][b-1] = 1;
+        adj[b-1][a-1] = 1;
+    }
+    
+    int count = 0;
+    
+    for(int i=0; i<V; i++)
+        for(int j=0; j<V; j++)
+            if(adj[i][j] == 1)
+                for(int k=0; k<V; k++)
+                    if(adj[j][k] == 1 and adj[k][i] == 1)
+                        count++;
+
+    return count/6;
+}
+
+
+
+
+
+
+int main()
+{
+	int n,m;
+	vector<int>u,v;
+	cin>>n>>m;
+	for(int i=0;i<m;i++)
+	{
+		int x;
+		cin>>x;
+		u.push_back(x);
+	}
+	for(int i=0;i<m;i++)
+	{
+		int x;
+		cin>>x;
+		v.push_back(x);
+	}
+	cout<<solve(n,m,u,v)<<endl;
+}

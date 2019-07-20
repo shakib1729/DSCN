@@ -1,0 +1,95 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MAXN 102
+
+
+
+
+
+char cn[] = "CODINGNINJA";
+bool solve(char Graph[][MAXN], int N, int M, bool visited[][MAXN], int idx, int r, int c){
+    if(idx == 11)
+        return true;
+    
+    visited[r][c] = true;
+    
+    // Search for this element in all the 8 directions
+    if(r+1 < N and Graph[r+1][c] == cn[idx] and !visited[r+1][c]){
+        if(solve(Graph, N, M, visited, idx+1, r+1, c))
+            return true;
+    }
+    
+    if(c+1 < M and Graph[r][c+1] == cn[idx] and !visited[r][c+1]){
+        if(solve(Graph, N, M, visited, idx+1, r, c+1))
+            return true;
+    }
+    
+    if(r+1 < N and c+1 < M and Graph[r+1][c+1] == cn[idx] and !visited[r+1][c+1]){
+        if(solve(Graph, N, M, visited, idx+1, r+1, c+1))
+            return true;
+    }
+    
+    if(r-1 >=0 and Graph[r-1][c] == cn[idx] and !visited[r-1][c]){
+        if(solve(Graph, N, M, visited, idx+1, r-1, c))
+            return true;
+    }
+    
+    if(c-1 >= 0 and Graph[r][c-1] == cn[idx] and !visited[r][c-1]){
+        if(solve(Graph, N, M, visited, idx+1, r, c-1))
+            return true;
+    }
+    
+    if(r+1 < N and c-1>=0 and Graph[r+1][c-1] == cn[idx] and !visited[r+1][c-1]){
+        if(solve(Graph, N, M, visited, idx+1, r+1, c-1))
+            return true;
+    }
+    
+    if(r-1 >= 0 and c+1 < M and Graph[r-1][c+1] == cn[idx] and !visited[r-1][c+1]){
+        if(solve(Graph, N, M, visited, idx+1, r-1, c+1))
+            return true;
+    }
+    
+    if(r-1>=0 and c-1>=0 and Graph[r-1][c-1] == cn[idx] and !visited[r-1][c-1]){
+        if(solve(Graph, N, M, visited, idx+1, r-1, c-1))
+            return true;
+    }
+    
+    visited[r][c] = false;
+    
+    return false; 
+}
+
+int solve(char Graph[][MAXN],int N, int M)
+{
+    bool visited[MAXN][MAXN] = {};
+	// Find a 'C' and start exploring from it
+    
+    for(int i=0; i<N; i++){
+        for(int j=0; j<M; j++){
+            if(Graph[i][j] == 'C'){
+                if(solve(Graph, N, M, visited, 1, i, j))
+                    return 1;
+            }
+        }
+    }
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+int main()
+{
+	int N,M,i;
+	char Graph[MAXN][MAXN];
+	cin>>N>>M;
+	for(i = 0;i < N; i++){
+		cin>>Graph[i];
+	}
+	cout<<solve(Graph,N,M)<<endl;
+}

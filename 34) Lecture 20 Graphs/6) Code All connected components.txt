@@ -1,0 +1,59 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+void dft(int nVertices, int **adj, int start, vector<bool> &visited, vector<int> &v){
+   if(visited[start])
+     return;
+
+   v.push_back(start);
+   visited[start] = true;
+   for(int i=0; i<nVertices; i++){
+      if(adj[start][i] == 1 and visited[i] == false)
+         dft(nVertices, adj, i, visited, v);
+   }
+
+}
+
+void dft(int nVertices, int **adj, int start){
+
+  vector<bool> visited(nVertices, false); // initialize all the visited to false
+ // dft(nVertices, adj, start, visited);
+
+  // here we again traverse the visited vector to check if any node component was isolated and then print that node
+  for(int i=0; i<nVertices; i++)
+    if(visited[i] == false){
+      vector<int> v;
+      cout<<endl;
+      dft(nVertices, adj, i, visited, v);
+      sort(v.begin(), v.end());
+      for(int j=0; j<v.size(); j++)
+        cout<<v[j]<<" ";
+    }
+       
+
+}
+
+int main()
+{
+   int nVertices;
+   cin >> nVertices;
+   int **adj = new int*[nVertices];
+ // try to initialize the 2d array with single 'new'
+   for(int i=0; i<nVertices; i++){
+      adj[i] = new int[nVertices];
+      for(int j=0; j<nVertices; j++)
+        adj[i][j] = 0;
+   }
+
+   int edges;
+   cin>>edges;
+   for(int i=0; i<edges; i++){
+    int a,b;
+    cin >> a >> b;
+    adj[a][b] = 1;
+    adj[b][a] = 1;
+   }
+   dft(nVertices, adj, 0);
+}

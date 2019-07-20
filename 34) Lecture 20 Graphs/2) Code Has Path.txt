@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool dft(int nVertices, int **adj, int start, vector<bool> &visited, int v2){
+
+   if(start == v2)
+     return true;
+  
+   visited[start] = true;
+   for(int i=0; i<nVertices; i++){
+      if(adj[start][i] == 1 and visited[i] == false){
+        bool ans = dft(nVertices, adj, i, visited, v2);
+        if(ans)
+          return ans;
+      } 
+   }
+  return false;
+}
+
+
+bool hasPath(int **adj, int V, int v1, int v2){
+    vector<bool> visited(V, false); 
+  return dft(V, adj, v1, visited, v2);
+}
+
+int main() {
+    int V, E;
+    cin >> V >> E;
+
+   int **adj = new int*[V];
+   for(int i=0; i<V; i++){
+      adj[i] = new int[V];
+      for(int j=0; j<V; j++)
+        adj[i][j] = 0;
+   }
+    for(int i=0; i<E; i++){
+      int a,b;
+      cin>>a>>b;
+      adj[a][b] = adj[b][a] = 1;
+    }
+   int v1, v2;
+   cin>>v1>>v2;
+   bool ans = hasPath(adj, V, v1, v2);
+   if(ans)
+     cout<<"true";
+   else
+     cout<<"false";
+  return 0;
+}
