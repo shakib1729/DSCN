@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+
+
+
+bool checkMaxHeap(int arr[], int n, int index){
+  if(index >= (n-1))
+    return true;
+  int left = 2*index + 1;
+  int right = 2*index + 2;
+  if((right < n and arr[right] > arr[index]) or (left < n and arr[left] > arr[index]))
+      return false;
+  return checkMaxHeap(arr, n, left) and checkMaxHeap(arr, n, right);
+}
+
+bool checkMaxHeap(int arr[], int n){
+   return checkMaxHeap(arr, n, 0);
+}
+
+
+
+
+
+int main() {
+    int n;
+    cin>>n;
+    int *arr = new int[n];
+    for(int i=0; i<n; i++){
+        cin >> arr[i];
+    }
+    bool ans = checkMaxHeap(arr, n);
+    if(ans){
+        cout << "true" << endl;
+    }
+    else{
+        cout << "false" << endl;
+    }
+    
+    delete [] arr;
+}
