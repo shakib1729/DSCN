@@ -1,0 +1,42 @@
+#include<iostream>
+using namespace std;
+
+
+
+#include<unordered_map> 
+
+	
+ void PairSum(int *input, int n) {	 
+	unordered_map<int, int> m;
+      
+      for(int i=0; i<n; i++){
+        int k = 0 - input[i];
+        
+        if(m.count(k) > 0){
+          int noOfPairs = m[k];
+          for(int j=0; j< noOfPairs; j++){
+            if(k < input[i])
+                cout<<k<<" "<<input[i]<<endl;
+            else
+                cout<<input[i]<<" "<<k<<endl;
+          }
+        }   
+        
+        m[input[i]]++;
+      }
+ }
+
+
+
+int main()
+{
+    int n;
+    int arr[100000];
+    cin>>n;
+    for(int i=0; i<n; i++)
+    {
+        cin>>arr[i];
+    }
+    PairSum(arr, n);
+    return 0;
+}

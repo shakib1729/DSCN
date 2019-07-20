@@ -1,0 +1,98 @@
+#include<iostream>
+#include <queue>
+#include<cmath>
+using namespace std;
+
+template <typename T>
+class BinaryTreeNode {
+    public :
+    T data;
+    BinaryTreeNode<T> *left;
+    BinaryTreeNode<T> *right;
+
+    BinaryTreeNode(T data) {
+        this -> data = data;
+        left = NULL;
+        right = NULL;
+    }
+
+};
+
+
+
+
+#include<unordered_map>
+#include<vector>
+
+void updateMap(BinaryTreeNode<int>* root, unordered_map<int, vector<int>> &m, int k){
+  if(root == nullptr)
+    return;
+  
+  m[k].push_back(root->data);
+  updateMap(root->left, m, k-1);
+  updateMap(root->right, m, k+1);
+}
+
+void printBinaryTreeVerticalOrder(BinaryTreeNode<int>* root) {	 
+  
+  unordered_map<int, vector<int>> m;
+  updateMap(root, m, 0);
+     	
+  for(unordered_map<int, vector<int>>::iterator it = m.begin(); it != m.end(); it++){
+    
+    for(vector<int>::iterator it2 = it->second.begin(); it2!=it->second.end(); it2++)
+      cout<<*it2<<" ";
+    
+    cout<<endl;
+  }
+  
+}
+
+
+
+
+
+
+BinaryTreeNode<int>* takeInputLevelWise() {
+    int data;
+//  cout << "Enter root : ";
+    cin >> data;
+
+    BinaryTreeNode<int> *root = new BinaryTreeNode<int>(data);
+
+    queue<BinaryTreeNode<int>* > pendingNodes;
+    pendingNodes.push(root);
+
+    while(!pendingNodes.empty()) {
+        BinaryTreeNode<int> *current = pendingNodes.front();
+        pendingNodes.pop();
+
+        int leftData, rightData;
+    //  cout << "Enter left child of : " << current -> data << " : ";
+        cin >> leftData;
+
+        if(leftData != -1) {
+            BinaryTreeNode<int> *left = new BinaryTreeNode<int>(leftData);
+            current -> left = left;
+            pendingNodes.push(left);
+        }
+
+    //  cout << "Enter right child of  " << current -> data << " : ";
+        cin >> rightData;
+
+        if(rightData != -1) {
+            BinaryTreeNode<int> *right = new BinaryTreeNode<int>(rightData);
+            current -> right = right;
+            pendingNodes.push(right);
+        }
+    }
+    return root;
+
+}
+
+int main()
+{
+    BinaryTreeNode<int> *root = takeInputLevelWise();
+    printBinaryTreeVerticalOrder(root);
+    return 0;
+}
