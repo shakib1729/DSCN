@@ -1,0 +1,90 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Sorted Linked List
+
+class node{
+
+public:
+    int data;
+    node *next;
+    node(int data): data(data), next(nullptr){
+
+    }
+};
+
+class SortedLinkedList{
+    node *head;
+
+public:
+    SortedLinkedList(){
+        head = nullptr;
+    }
+
+    void print(){
+        node *curr = head;
+        while(curr != nullptr){
+            cout<<curr->data<<" ";
+            curr = curr->next;
+        }
+        cout<<endl;
+    }
+    void insert(int value){
+        // Find the position
+        node *prev = nullptr, *curr = head;
+        while(curr != nullptr and curr->data<value){
+            prev = curr;
+            curr = curr->next;
+        }
+
+        node *ptr = new node(value);
+        if(prev == nullptr){
+            ptr->next = head;
+            head = ptr;
+        }
+        else{
+            prev->next = ptr;
+            ptr->next = curr;
+        }
+    }
+
+    void deletee(int value){
+        node *prev = nullptr, *curr = head;
+        while(curr != nullptr and curr->data!=value){
+            prev = curr;
+            curr = curr->next;
+        }
+        // Also check for if element not found
+
+        node *ptr = curr;
+        if(prev == nullptr){
+            head = head->next;
+        }
+        else{
+            prev->next = curr->next;
+        }
+        delete ptr;
+    }
+
+};
+
+
+int main()
+{
+ SortedLinkedList ll;
+ ll.insert(5);
+ ll.insert(1);
+ ll.insert(4);
+ ll.insert(99);
+ ll.insert(75);
+ ll.insert(22);
+
+ ll.print();
+
+ ll.deletee(1);
+ ll.deletee(75);
+
+ ll.print();
+
+ return 0;
+}

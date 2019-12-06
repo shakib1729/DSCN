@@ -1,0 +1,145 @@
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct dll_int_node
+{
+	int iData;
+	struct dll_int_node *pPrevNode;
+	struct dll_int_node *pNextNode;
+} dll_int_node;
+
+/* Allocates a node and sets its parameters */
+static void createNewNode_Dll(dll_int_node **ppNewNode, int iData, dll_int_node *pNext, dll_int_node *pPrev)
+{
+	*ppNewNode = (dll_int_node *)malloc(sizeof(dll_int_node));
+	(*ppNewNode)->iData = iData;
+	(*ppNewNode)->pNextNode = pNext;
+	(*ppNewNode)->pPrevNode = pPrev;
+}
+
+static dll_int_node *getTail_Dll(dll_int_node *pHead)
+{
+	if(pHead != NULL)
+	{
+		while(pHead->pNextNode != NULL)
+			pHead = pHead->pNextNode;
+	}
+
+	return pHead;
+}
+
+/* Insert to the start of the list */
+void insertFront_Dll(dll_int_node **ppHead, int iNewData)
+{
+	dll_int_node *pNewNode = NULL;
+
+	createNewNode_Dll(&pNewNode, iNewData, *ppHead, NULL);
+
+	if(*ppHead != NULL)
+		(*ppHead)->pPrevNode = pNewNode;
+
+	*ppHead = pNewNode;
+}
+
+void printListForward_Dll(dll_int_node *pHead)
+{
+	while(pHead != NULL)
+	{
+		printf("%d ", pHead->iData);
+		pHead = pHead->pNextNode;
+	}
+}
+
+static void partition_QuickSort_Dll(dll_int_node **ppHead, dll_int_node **ppTail)
+{
+	dll_int_node *pNewTail = NULL, *pCurr = *ppHead, *pPivot = *ppTail;
+
+	while(pCurr != pPivot)
+	{
+		if((pCurr->iData) > (pPivot->iData))
+		{
+			if(pCurr->pPrevNode != NULL)
+				pCurr->pPrevNode->pNextNode = pCurr->pNextNode;
+			if(pCurr->pNextNode != NULL)
+				pCurr->pNextNode->pPrevNode = pCurr->pPrevNode;
+
+			pNewTail = pCurr;
+			pCurr = pCurr->pNextNode;
+			if(pCurr->pPrevNode == NULL)
+				*ppHead = pCurr;
+
+			pNewTail->pPrevNode = *ppTail;
+			pNewTail->pNextNode = NULL;
+			(*ppTail)->pNextNode = pNewTail;
+			*ppTail = pNewTail;
+		}
+		else
+			pCurr = pCurr->pNextNode;
+	}
+
+	if(pPivot->pPrevNode != NULL)
+		pPivot->pPrevNode->pNextNode = NULL;
+
+	if(pPivot->pNextNode != NULL)
+		pPivot->pNextNode->pPrevNode = NULL;
+}
+
+static void quickSortList_Recur_Dll(dll_int_node **ppHead, dll_int_node **ppTail)
+{
+	dll_int_node *pPivot = *ppTail;
+
+	if((*ppHead != NULL) && (*ppTail != NULL) && (*ppHead != *ppTail))
+	{
+		/* partition */
+		partition_QuickSort_Dll(ppHead, ppTail);
+		/* sort left part */
+		quickSortList_Recur_Dll(ppHead, &(pPivot->pPrevNode));
+		/* sort right part */
+		quickSortList_Recur_Dll(&(pPivot->pNextNode), ppTail);
+
+		/* connect pivot to left & right parts */
+		if(pPivot->pPrevNode != NULL)
+			pPivot->pPrevNode->pNextNode = pPivot;
+
+		if(pPivot->pNextNode != NULL)
+			pPivot->pNextNode->pPrevNode = pPivot;
+	}
+}
+
+void quickSortList_Dll(dll_int_node **ppHead)
+{
+	dll_int_node *pTail = getTail_Dll(*ppHead);
+
+	if(*ppHead != NULL)
+		quickSortList_Recur_Dll(ppHead, &pTail);
+}
+
+void test_QuickSort_Dll()
+{
+	printf("---TEST: Quick Sort on Doubly Linked List\n");
+
+	dll_int_node *a = NULL;
+
+	insertFront_Dll(&a, 5);
+	insertFront_Dll(&a, 20);
+	insertFront_Dll(&a, 4);
+	insertFront_Dll(&a, 3);
+	insertFront_Dll(&a, 30);
+
+	printf("Linked list before sorting: ");
+	printListForward_Dll(a);
+	printf("\n");
+
+	quickSortList_Dll(&a);
+
+	printf("Linked list after sorting: ");
+	printListForward_Dll(a);
+	printf("\n");
+}
+
+int main(void)
+{
+	test_QuickSort_Dll();
+	return 0;
+}

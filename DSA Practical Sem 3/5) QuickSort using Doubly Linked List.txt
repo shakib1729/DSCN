@@ -1,0 +1,93 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Quicksort using Doubly Linked List
+class node{
+public:
+    int data;
+    node *next;
+    node *prev;
+    node(int data): data(data), next(nullptr), prev(nullptr){
+
+    }
+};
+node *head;
+
+void insertt(int value){
+    node *ptr = new node(value);
+    ptr->next = head;
+    if(head != nullptr)
+        head->prev = ptr;
+    head = ptr;
+}
+
+void print(){
+    node *curr = head;
+    while(curr != nullptr){
+        cout<<curr->data<<" ";
+        curr = curr->next;
+    }
+    cout<<endl;
+}
+
+void swap(node *a, node *b){
+    int temp = a->data;
+    a->data = b->data;
+    b->data = temp;
+}
+
+node *partition(node *start, node *end){
+    node *pivot = end;
+    int pivotData = pivot->data;
+
+    node *i = start->prev;
+    for(node *curr=start; curr!=end; curr=curr->next){
+        if(curr->data <= pivotData){
+            if(i == nullptr)
+                i = start;
+            else
+                i = i->next;
+            swap(i, curr);
+        }
+    }
+
+    if(i == nullptr)
+        i = start;
+    else
+        i = i->next;
+    swap(i, pivot);
+    return i;
+}
+
+void quickSort(node *start, node *end){
+    if(end == nullptr or start == end or start == end->next)
+        return;
+
+    node *pivot = partition(start, end);
+    quickSort(start, pivot->prev);
+    quickSort(pivot->next, end);
+
+}
+
+void quickSort(node *head){
+
+    node *end = head;
+    while(end->next != nullptr){
+        end = end->next;
+    }
+    quickSort(head, end);
+}
+
+int main()
+{
+ insertt(5);
+ insertt(1);
+ insertt(6);
+ insertt(4);
+ insertt(3);
+ print();
+
+ quickSort(head);
+ print();
+ return 0;
+}

@@ -1,0 +1,72 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MAX 100
+// 2 Stacks in an Array
+
+int st1 = -1, st2 = MAX;
+void push1(int arr[], int value){
+    if(st1+1 == st2){
+        cout<<"Overflow"<<endl;
+        return;
+    }
+    arr[++st1] = value;
+}
+
+void push2(int arr[], int value){
+    if(st1 == st2-1){
+        cout<<"Overflow"<<endl;
+        return;
+    }
+    arr[--st2] = value;
+}
+
+void pop1(int arr[]){
+    if(st1 == -1){
+        cout<<"Underflow"<<endl;
+        return;
+    }
+    st1--;
+}
+
+void pop2(int arr[]){
+    if(st2 == MAX){
+        cout<<"Underflow"<<endl;
+        return;
+    }
+    st2++;
+}
+
+int top1(int arr[]){
+    if(st1 == -1){
+        cout<<"Underflow"<<endl;
+        return -1;
+    }
+    return arr[st1];
+}
+
+int top2(int arr[]){
+    if(st2 == MAX){
+        cout<<"Underflow"<<endl;
+        return -1;
+    }
+    return arr[st2];
+}
+
+
+int main()
+{
+
+ int arr[MAX];
+
+ push1(arr, 1);
+ push2(arr, 10);
+ push2(arr, 5);
+ cout<<top2(arr)<<endl;
+ cout<<top1(arr)<<endl;
+ pop1(arr);
+ pop2(arr);
+ cout<<top2(arr)<<endl;
+ cout<<top1(arr)<<endl;
+ return 0;
+}
+

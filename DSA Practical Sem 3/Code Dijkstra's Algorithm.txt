@@ -1,0 +1,70 @@
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int findMinVertex(int V, bool visited[], int distance[]){
+    int minDistanceVertex, minWeight = INT_MAX;
+    for(int i=0; i<V; i++)
+        if(visited[i] == false and distance[i] < minWeight){
+            minWeight = distance[i];
+            minDistanceVertex = i;
+        }
+    return minDistanceVertex;
+}
+
+void Dijkstra(int **adj, int V){
+
+  bool *visited = new bool[V];
+  int *distance = new int[V];
+  for(int i=0; i<V; i++){
+      visited[i] = false;
+      distance[i] = INT_MAX;
+  }
+  distance[0] = 0;
+  for(int i=0; i<V-1; i++){
+      // Find min distance vertex from all unvisited vertices
+      int minDistanceVertex = findMinVertex(V, visited, distance);
+      
+      // Mark 'minDistanceVertex' as visited
+      visited[minDistanceVertex] = true;
+      
+      //Explore neightbours of 'minDistanceVertex' and update if path to that node is better via 'minDistanceVertex'
+      for(int j=0; j<V; j++)
+        if(adj[minDistanceVertex][j] != 0 and visited[j] == false){
+             int tempDist = distance[minDistanceVertex] + adj[minDistanceVertex][j];
+             if(tempDist < distance[j])
+                 distance[j] = tempDist;
+        }
+      
+  }
+  for(int i=0; i<V; i++)
+      cout<<i<<" "<<distance[i]<<endl;
+
+  delete[] visited;
+  delete[] distance;
+}
+
+
+
+int main()
+{
+  int V, E, tempX, tempY, w;
+  cin >> V >> E;
+  int **adj = new int *[V];
+  for(int i=0; i<V; i++){
+      adj[i] = new int[V];
+      for(int j=0; j<V; j++)
+          adj[i][j] = 0;
+  }
+  for(int i=0; i<E; i++){
+      cin>>tempX>>tempY>>w;
+      adj[tempX][tempY] = w;
+      adj[tempY][tempX] = w;
+  }
+  Dijkstra(adj, V);
+
+  for(int i=0; i<V; i++)
+    delete[] adj[i];
+  delete[] adj;
+  return 0;
+}

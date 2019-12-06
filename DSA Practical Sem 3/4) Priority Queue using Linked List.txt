@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Priority Queue using Linked List
+class node{
+public:
+    int data, priority;
+    node *next;
+    node(int d, int p): data(d), priority(p), next(nullptr){
+
+    }
+};
+
+class PriorityQueue{
+    node *head;
+public:
+    PriorityQueue(): head(nullptr){
+
+    }
+
+//    void print(){
+//        node *curr = head;
+//        while(curr != nullptr){
+//            cout<<curr->data<<" ";
+//            curr = curr->next;
+//        }
+//    }
+    void enqueue(int value, int pr){
+        node *prev = nullptr, *curr = head;
+
+        while(curr != nullptr and curr->priority>pr){
+            prev = curr;
+            curr = curr->next;
+        }
+
+        node *ptr = new node(value, pr);
+        if(prev == nullptr){
+            ptr->next = head;
+            head = ptr;
+        }
+        else{
+            prev->next = ptr;
+            ptr->next = curr;
+        }
+    }
+
+    int front(){
+        if(head == nullptr)
+            return 0;
+        return head->data;
+    }
+
+    void dequeue(){
+        node *ptr = head;
+        head = head->next;
+        delete ptr;
+    }
+
+};
+
+int main()
+{
+
+ PriorityQueue pq;
+ pq.enqueue(3, 10);
+ pq.enqueue(1, 8);
+ pq.enqueue(2, 9);
+ pq.enqueue(10, 100);
+ pq.enqueue(11, 1);
+// pq.print();  // 10 3 2 1 11
+
+ for(int i=0; i<5; i++){
+    cout<<pq.front()<<" ";
+    pq.dequeue();
+ }
+
+
+ return 0;
+}
+

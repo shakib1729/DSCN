@@ -1,0 +1,61 @@
+
+void inplaceHeapSort(int arr[], int n){
+  // Create Min Heap by rearranging elements of the same array
+  
+  
+    for(int i=1; i<n; i++){
+        // Insert arr[i] into the Heap
+        
+        // UpHeapify
+        int currIndex = i;
+        while(currIndex>0){
+            int parentIndex = (currIndex-1)/2;
+            if(arr[parentIndex] > arr[currIndex]){
+                int temp = arr[parentIndex];
+                arr[parentIndex] = arr[currIndex];
+                arr[currIndex] = temp;
+            }
+            else 
+                break;
+            currIndex = parentIndex;
+        }
+    }
+    
+    // Remove min element one by one and put it at the end of array
+    
+    for(int i=n-1; i>=0; i--){  // 'i' denotes the current size of Heap
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        // DownHeapify
+        int parentIndex = 0;
+        while(parentIndex<i){
+            int leftChild = 2*parentIndex+1, 
+                rightChild = 2*parentIndex+2;
+            int minIndex = parentIndex;
+            if(leftChild<i and rightChild<i){
+                if(arr[leftChild] < arr[minIndex])
+                    minIndex = leftChild;
+                if(arr[rightChild] < arr[minIndex])
+                    minIndex = rightChild;
+            }
+            else if(leftChild<i){
+                if(arr[leftChild] < arr[minIndex])
+                    minIndex = leftChild;
+            }
+            else if(rightChild<i){
+                if(arr[rightChild] < arr[minIndex])
+                    minIndex = rightChild;
+            }
+            
+            if(minIndex == parentIndex)
+                break;
+            
+            int temp = arr[parentIndex];
+            arr[parentIndex] = arr[minIndex];
+            arr[minIndex] = temp;
+            
+            parentIndex = minIndex;
+        }
+    }
+}

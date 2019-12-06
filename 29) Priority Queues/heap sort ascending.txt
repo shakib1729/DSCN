@@ -1,0 +1,43 @@
+#include<algorithm>
+using namespace std;
+
+// For Ascending order, we create a Max Heap
+void heapify(int arr[], int i, int n){  // The Heapify function is the DownHeapify function
+    int parentIndex = i;
+        while(parentIndex<n){
+            int leftChild = 2*parentIndex+1, 
+                rightChild = 2*parentIndex+2;
+            int maxIndex = parentIndex;
+            
+            if(leftChild<n and arr[leftChild] > arr[maxIndex])
+                    maxIndex = leftChild;
+            
+            if(rightChild<n and arr[rightChild] > arr[maxIndex])
+                    maxIndex = rightChild;
+            
+            if(maxIndex == parentIndex)
+                break;
+            
+            int temp = arr[parentIndex];
+            arr[parentIndex] = arr[maxIndex];
+            arr[maxIndex] = temp;
+            
+            parentIndex = maxIndex;
+        }
+}
+
+
+void heapSort(int arr[], int n) {
+  // Create Max Heap
+    for(int i=n/2-1; i>=0; i--){
+        heapify(arr, i, n);
+    }
+    
+    // Remove root from each time until only single node remains
+    for(int i=n-1; i>=0; i--){
+        // Swap the root with the last element
+        swap<int>(arr[0], arr[i]);
+        // Now Downheapify to maintain the property of maxHeap
+        heapify(arr, 0, i);
+    }
+}

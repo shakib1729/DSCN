@@ -1,0 +1,114 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Evaluation of Infix
+bool isOperator(char ch){
+
+    if(ch == '+' or ch == '-' or ch == '*' or ch == '/' or ch == '^')
+        return true;
+    return false;
+}
+
+int evaluate(int a, int b, char op){
+
+ switch(op){
+    case '^': return pow(a,b);
+    case '*': return a*b;
+    case '/': return a/b;
+    case '+': return a+b;
+    case '-': return a-b;
+ }
+}
+
+int evaluatePostfix(string s){
+ stack<int> st;
+ for(int i=0; i<s.size(); i++){
+    if(isOperator(s[i])){
+        int A = st.top(); st.pop();
+        int B = st.top(); st.pop();
+        int result = evaluate(B, A, s[i]);
+        st.push(result);
+    }
+    else{
+        st.push(s[i]-'0');
+    }
+ }
+ int ans = st.top();
+ return ans;
+}
+
+int getPrecedence(char ch){
+    if(ch == '^')
+        return 3;
+    else if(ch == '*' or ch == '/')
+        return 2;
+    else if(ch == '+' or ch == '-')
+        return 1;
+}
+
+void displayStack(stack<char> st){
+    vector<char> v;
+    while(!st.empty()){
+        v.push_back(st.top());
+        st.pop();
+    }
+    for(int i=v.size()-1; i>=0; i--){
+        cout<<v[i];
+    }
+}
+
+string infixToPostfix(string s){
+
+  stack<char> st;
+// cout<<endl<<"The given Infix expression is: "<<s<<endl<<endl;
+ st.push('(');
+ s.push_back(')');
+
+ string postfix;
+
+
+// cout<<endl;
+// cout<<"\t\tCharacter Scanned \t\t Stack \t\t Postfix Expression"<<endl;
+// cout<<"\t\t----------------------------------------------------------------------"<<endl;
+
+ for(int i=0; i<s.size(); i++){
+//    cout<<"\t\t"<<s[i]<<"\t\t\t\t";
+//    displayStack(st);
+//    cout<<"\t\t\t\t";
+//    cout<<postfix<<endl;
+    if(s[i] == '('){
+        st.push(s[i]);
+    }
+    else if(isOperator(s[i])){
+        while(!st.empty() and st.top()!='(' and getPrecedence(st.top())>=getPrecedence(s[i])){
+            postfix.push_back(st.top());
+            st.pop();
+        }
+        st.push(s[i]);
+    }
+    else if(s[i] == ')'){
+        while(!st.empty() and st.top() != '('){
+                postfix.push_back(st.top());
+                st.pop();
+              }
+        if(!st.empty())
+            st.pop();
+    }
+    else{
+        postfix.push_back(s[i]);
+    }
+ }
+    return postfix;
+}
+
+int main()
+{
+
+ string s;
+ cin>>s;
+ string postfix = infixToPostfix(s);
+// cout<<postfix<<endl;
+ int ans = evaluatePostfix(postfix);
+ cout<<ans;
+ return 0;
+}

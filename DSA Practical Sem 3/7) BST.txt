@@ -1,0 +1,186 @@
+#include<iostream>
+using namespace std;
+
+class binaryTreeNode{
+public:
+    int data;
+    binaryTreeNode *left, *right;
+    binaryTreeNode(int data):data(data), left(nullptr), right(nullptr){}
+};
+
+class BST{
+
+    binaryTreeNode *root;
+public:
+    BST(int d){
+        root = new binaryTreeNode (d);
+    }
+
+    bool search(binaryTreeNode *root, int value){
+        if(root ==  nullptr)
+            return false;
+        if(value == root->data)
+            return true;
+        if(value > root->data)
+            return search(root->right, value);
+        return search(root->left, value);
+    }
+
+    bool search(int value){
+        return search(root, value);
+    }
+
+    void inorder(binaryTreeNode *root){
+        if(root == nullptr)
+            return;
+        inorder(root->left);
+        cout<<root->data<<" ";
+        inorder(root->right);
+    }
+
+    void inorder(){
+        inorder(root);
+    }
+
+    void preorder(binaryTreeNode *root){
+        if(root == nullptr)
+            return;
+        cout<<root->data<<" ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+
+    void preorder(){
+        preorder(root);
+    }
+
+    void postorder(binaryTreeNode *root){
+        if(root == nullptr)
+            return;
+        postorder(root->left);
+        postorder(root->right);
+        cout<<root->data<<" ";
+    }
+
+    void postorder(){
+        postorder(root);
+    }
+
+    binaryTreeNode* insert(binaryTreeNode *root, int value){
+        if(root == nullptr){
+            binaryTreeNode *node = new binaryTreeNode(value);
+            return node;
+        }
+        if(value >= root->data)
+            root->right = insert(root->right, value);
+        else
+            root->left = insert(root->left, value);
+        return root;
+    }
+
+    void insert(int value){
+        root = insert(root, value);
+    }
+    binaryTreeNode *findSmallest(binaryTreeNode *root){
+        binaryTreeNode *smallest = root;
+        while(smallest->left)
+            smallest = smallest->left;
+        return smallest;
+    }
+
+    binaryTreeNode *deletee(binaryTreeNode *root, int value){
+        if(root == nullptr)
+            return nullptr;
+        if(root->data == value){
+            // 3 Cases:
+
+            if(root->left==nullptr and root->right==nullptr){
+                binaryTreeNode *ptr = root;
+                delete ptr;
+                return nullptr;
+            }
+            else if(root->left == nullptr){
+                binaryTreeNode *ptr = root;
+                root = root->right;
+                delete ptr;
+            }
+            else if(root->right == nullptr){
+                binaryTreeNode *ptr = root;
+                root = root->left;
+                delete ptr;
+            }
+            else{
+                // Find smallest in right Subtree ( Inorder Successor ), replace root with that and then delete that inorder successor
+                binaryTreeNode *inorderSuccessor = findSmallest(root->right);
+                int temp = root->data;
+                root->data = inorderSuccessor->data;
+                inorderSuccessor->data = temp;
+                root->right = deletee(root->right, inorderSuccessor->data);
+            }
+        }
+        else if(value > root->data)
+            root->right = deletee(root->right, value);
+        else if(value < root->data)
+            root->left = deletee(root->left, value);
+        return root;
+    }
+    void deletee(int value){
+        root = deletee(root, value);
+    }
+
+};
+
+int main()
+{
+
+ int data;
+ cout<<"Enter value of root: "<<endl;
+ cin>>data;
+
+ BST tree(data);
+
+ int op=1, val;
+ while(op){
+        cout<<endl<<"Enter Option: "<<endl;
+        cout<<" 1) Insert "<<endl;
+        cout<<" 2) Delete "<<endl;
+        cout<<" 3) Search "<<endl;
+        cout<<" 4) Preorder Traversal "<<endl;
+        cout<<" 5) Inorder Traversal "<<endl;
+        cout<<" 6) Postorder Traversal "<<endl;
+        cout<<" 0) Exit "<<endl;
+        cin>>op;
+        switch(op){
+            case 1:
+                 cout<<"Enter value to insert: ";
+                 cin>>data;
+                 tree.insert(data);
+                 break;
+            case 2:
+                 cout<<"Enter value to delete: ";
+                 cin>>data;
+                 tree.deletee(data);
+                 break;
+            case 3:
+                 cout<<"Enter value to search: ";
+                 cin>>data;
+                 if(tree.search(data))
+                    cout<<"Found"<<endl;
+                 else
+                    cout<<"Not Found"<<endl;
+                 break;
+            case 4:
+                 tree.preorder();
+                 break;
+            case 5:
+                 tree.inorder();
+                 break;
+            case 6:
+                 tree.postorder();
+                 break;
+
+        }
+    }
+
+ return 0;
+}

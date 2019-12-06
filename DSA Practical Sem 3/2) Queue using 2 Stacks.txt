@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Queue using 2 Stacks
+class Queue{
+    stack<int> st1, st2;
+
+public:
+    Queue(){
+    }
+
+    void enqueue(int value){
+        st1.push(value);
+    }
+//    void dequeue(){
+//        while(!st1.empty()){
+//            st2.push(st1.top());
+//            st1.pop();
+//        }
+//        st2.pop();
+//        while(!st2.empty()){
+//            st1.push(st2.top());
+//            st2.pop();
+//        }
+//    }
+//    int front(){
+//        while(!st1.empty()){
+//            st2.push(st1.top());
+//            st1.pop();
+//        }
+//        int ans = st2.top();
+//        while(!st2.empty()){
+//            st1.push(st2.top());
+//            st2.pop();
+//        }
+//        return ans;
+//    }
+      void dequeue(){
+        if(st2.empty()){
+            while(!st1.empty()){
+                st2.push(st1.top());
+                st1.pop();
+            }
+        }
+        // Also add underflow condition (both stack empty)
+        st2.pop();
+      }
+    int front(){
+        if(st2.empty()){
+            while(!st1.empty()){
+                st2.push(st1.top());
+                st1.pop();
+            }
+        }
+        // Also add underflow condition (both stack empty)
+        int ans = st2.top();
+        return ans;
+    }
+};
+
+int main()
+{
+
+ Queue q;
+ for(int i=1; i<=5; i++){
+    q.enqueue(i);
+ }
+
+ for(int i=0; i<5; i++){
+    cout<<q.front()<<" ";
+    q.dequeue();
+ }
+ return 0;
+}
+

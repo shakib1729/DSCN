@@ -1,0 +1,271 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+void quickSort(int arr[], int start,int end){
+  if(start>=end)
+    return;
+  int pivot=start,count=0;
+  
+  for(int i=start+1;i<=end;i++)
+    if(arr[i]<arr[pivot])
+      count++;
+  
+  pivot+=count;
+  swap<int> (arr[start],arr[pivot]);
+  
+  int left=start,right=end;
+  while(left<=right){
+    if(arr[left] < arr[pivot])
+      left++;
+    else if(arr[right] >= arr[pivot])
+      right--;
+    else
+      swap<int> (arr[left++],arr[right--]);
+  }
+  quickSort(arr,pivot+1,end);
+  quickSort(arr,start,pivot-1);
+}
+
+
+void quickSort(int input[], int size) {
+  quickSort(input,0,size-1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// int partition(int A[], int start, int end){
+//     int pivot = A[start], count_smaller = 0;
+    
+//     for(int i=start+1; i<=end; i++){
+//         if(A[i] <= pivot)
+//             count_smaller++;
+//     }
+    
+//     int c = start + count_smaller;
+    
+//     int temp = A[c];
+//     A[c] = A[start];
+//     A[start] = temp;
+    
+//     int i = start, j = end;
+    
+//     while(i < c){
+//         if(A[i] <= pivot)
+//             i++;
+//         else if(A[j] > pivot)
+//             j--;
+//         else{
+//             int temp = A[i];
+//             A[i] = A[j];
+//             A[j] = temp;
+//             i++;
+//             j--;
+//         }
+//     }
+    
+//     return c;
+// }
+
+
+// void quickSort(int A[], int start, int end) {
+//    if(start >= end)
+//        return;
+    
+//     int c = partition(A, start, end);
+//     quickSort(A, start, c-1);
+//     quickSort(A, c+1, end);
+
+// }
+
+// void quickSort(int input[], int size) {
+//   quickSort(input, 0, size-1);
+// }
+
+
+
+
+
+
+int main(){
+    int n;
+    cin >> n;
+  
+    int *input = new int[n];
+    
+    for(int i = 0; i < n; i++) {
+        cin >> input[i];
+    }
+    
+    quickSort(input, n);
+    for(int i = 0; i < n; i++) {
+        cout << input[i] << " ";
+    }
+    
+    delete [] input;
+
+}
+
+
+
+
+
+
+
+
+
+// #include<stack>
+// #include<queue>
+// using namespace std;
+
+// int partition(int A[], int start, int end){
+//     int pivot = A[start], count_smaller = 0;
+    
+//     for(int i=start+1; i<=end; i++){
+//         if(A[i] <= pivot)
+//             count_smaller++;
+//     }
+    
+//     int c = start + count_smaller;
+    
+//     int temp = A[c];
+//     A[c] = A[start];
+//     A[start] = temp;
+    
+//     int i = start, j = end;
+    
+//     while(i < c){
+//         if(A[i] <= pivot)
+//             i++;
+//         else if(A[j] > pivot)
+//             j--;
+//         else{
+//             int temp = A[i];
+//             A[i] = A[j];
+//             A[j] = temp;
+//             i++;
+//             j--;
+//         }
+//     }
+    
+//     return c;
+// }
+
+
+// // void quickSortRec(int A[], int start, int end) {
+// //    if(start >= end)
+// //        return;
+    
+// //     int c = partition(A, start, end);
+// //     quickSortRec(A, start, c-1);
+// //     quickSortRec(A, c+1, end);
+
+// // }
+
+// // void quickSortStack(int A[], int start, int end) {
+// //    // We store the details of each function call in stack, i.e. 'start' and 'end' of each function call
+// //     stack<pair<int, int>> s;
+// //     s.push(make_pair(start, end));
+    
+// //     while(!s.empty()){
+// //         int start = s.top().first,
+// //             end = s.top().second;
+// //         s.pop();
+// //         if(start < end){
+// //             int pivot = partition(A, start, end);
+// //             s.push(make_pair(start, pivot-1));
+// //             s.push(make_pair(pivot+1, end));
+// //         }
+// //     }
+
+// // }
+
+
+// // void quickSortQueue(int A[], int start, int end) {
+// //    // We store the details of each function call in queue, i.e. 'start' and 'end' of each function call
+// //     queue<pair<int, int>> q;
+// //     q.push(make_pair(start, end));
+    
+// //     while(!q.empty()){
+// //         int start = q.front().first,
+// //             end = q.front().second;
+// //         q.pop();
+// //         if(start < end){
+// //             int pivot = partition(A, start, end);
+// //             q.push(make_pair(start, pivot-1));
+// //             q.push(make_pair(pivot+1, end));
+// //         }
+// //     }
+
+// // }
+
+
+// // void quickSortStackNoPair(int A[], int start, int end) {
+// //    // We store the details of each function call in stack, i.e. 'start' and 'end' of each function call
+// //     stack<int> s;
+// //     // The top element is 'start' and next to top is 'end'
+// //     s.push(end);
+// //     s.push(start);
+    
+// //     while(!s.empty()){
+// //         int start = s.top(); s.pop();
+// //         int end = s.top(); s.pop();
+// //         if(start < end){
+// //             int pivot = partition(A, start, end);
+// //             s.push(pivot-1); s.push(start);
+// //             s.push(end); s.push(pivot+1);
+            
+// //         }
+// //     }
+// // }
+
+// void quickSortQueueNoPair(int A[], int start, int end) {
+//    // We store the details of each function call in queue, i.e. 'start' and 'end' of each function call
+//     queue<int> q;
+//     // The front element is 'start' and next to front is 'end'
+//     q.push(start);
+//     q.push(end);
+    
+//     while(!q.empty()){
+//         int start = q.front(); q.pop();
+//         int end = q.front(); q.pop();
+//         if(start < end){
+//             int pivot = partition(A, start, end);
+//             q.push(start); q.push(pivot-1);
+//             q.push(pivot+1); q.push(end);
+//         }
+//     }
+// }
+
+
+
+// void quickSort(int input[], int size) {
+// // quickSortRec(input, 0, size-1);
+    
+// // quickSortStack(input, 0, size-1);
+    
+// // quickSortQueue(input, 0, size-1);
+ 
+// // quickSortStackNoPair(input, 0, size-1);
+    
+//     quickSortQueueNoPair(input, 0, size-1);
+// }
+
